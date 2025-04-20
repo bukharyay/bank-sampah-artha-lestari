@@ -1,0 +1,36 @@
+/* Notifikasi */
+.count-indicator {
+	position: relative;
+}
+
+.count {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	min-width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	font-size: 10px;
+	line-height: 20px;
+	text-align: center;
+	padding: 0 5px;
+	display: none;
+}
+
+.notification-item.unread {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.notification-item:hover {
+	background-color: #f8f9fa;
+}
+
+.dropdown-menu.notification-dropdown {
+	width: 350px;
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.preview-item-content {
+	white-space: normal;
+}

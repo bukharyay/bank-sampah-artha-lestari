@@ -1,0 +1,467 @@
+let MapOl = ol.Map
+let View = ol.View
+let OverviewMap = ol.control.OverviewMap
+let ScaleLine = ol.control.ScaleLine
+let ZoomSlider = ol.control.ZoomSlider
+let {
+	defaults: defaultControls
+} = ol.control.defaults
+let TileLayer = ol.layer.Tile
+let OSM = ol.source.OSM
+let VectorSource = ol.source.Vector
+let VectorLayer = ol.layer.Vector
+
+let straitSource = new VectorSource({
+	features: [],
+	wrapX: true
+})
+let straitsLayer = new VectorLayer({
+	source: straitSource
+})
+
+let OverviewMapControl = new OverviewMap({
+	className: 'ol-overviewmap ol-custom-overviewmap',
+	layers: [
+		new TileLayer({
+			source: new OSM()
+		})
+	],
+	collapseLabel: '\u00BB',
+	label: '\u00AB',
+	collapsed: false
+})
+
+let map = new MapOl({
+	controls: defaultControls().extend([
+		OverviewMapControl,
+		new ScaleLine(),
+		new ZoomSlider()
+	]),
+	layers: [
+		new TileLayer({
+			source: new OSM()
+		}),
+		straitsLayer
+	],
+	target: 'map',
+	view: new View({
+		center: ol.proj.fromLonLat([110.422, -6.992]),
+		maxZoom: 18,
+		minZoom: 7,
+		zoom: 12
+	})
+})
+
+// Popup Initialization
+const initPopup = (id, duration) => {
+	const container = document.getElementById(id);
+	return new ol.Overlay({
+		element: container,
+		autoPan: true,
+		autoPanAnimation: {
+			duration: duration
+		}
+	});
+};
+
+const popup = initPopup('popup');
+const popupClick = initPopup('popupClick');
+map.addOverlay(popup, 450);
+map.addOverlay(popupClick, 250);
+
+// Popup showing the position the hovered marker
+// let container = document.getElementById('popup')
+// let popup = new ol.Overlay({
+// 	element: container,
+// 	autoPan: true,
+// 	autoPanAnimation: {
+// 		duration: 450
+// 	}
+// })
+// map.addOverlay(popup)
+
+// // Popup showing the position the user clicked
+// let containerClick = document.getElementById('popupClick')
+// let popupClick = new ol.Overlay({
+// 	element: containerClick,
+// 	autoPan: true,
+// 	autoPanAnimation: {
+// 		duration: 250
+// 	}
+// })
+// map.addOverlay(popupClick)
+
+// Popup part
+// let content = document.getElementById('popup-content')
+// let contentClick = document.getElementById('popup-content-click')
+// let selected = null
+// let lastMarker = null
+
+// // Hover popup
+// map.on('pointermove', function (evt) {
+// 	var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
+// 		return feat
+// 	})
+// 	if (map.hasFeatureAtPixel(evt.pixel) === true) {
+// 		if (selected != feature) {
+// 			// Event coordinates
+// 			// popup.setPosition(evt.coordinate);
+// 			// Lon Lat coordinates
+// 			var postion = ol.proj.transform(
+// 				[feature.get('lon'), feature.get('lat')],
+// 				'EPSG:4326',
+// 				'EPSG:3857'
+// 			)
+// 			content.innerHTML = feature.get('desc')
+// 			// Show marker on top
+// 			MarkerOnTop(feature, true)
+// 			// Show popup
+// 			popup.setPosition(postion)
+// 		}
+// 	} else {
+// 		straitSource.getFeatures().forEach(f => {
+// 			// Hide markers zindex 999
+// 			MarkerOnTop(f, false)
+// 		})
+// 		// Hide popup
+// 		popup.setPosition(undefined)
+// 	}
+// })
+
+
+// // Click popup
+// map.on('click', function (evt) {
+// 	var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
+// 		selected = feat
+// 		return feat
+// 	})
+// 	if (map.hasFeatureAtPixel(evt.pixel) === true) {
+// 		// Event coordinates
+// 		// popup.setPosition(evt.coordinate);
+// 		// Lon Lat coordinates
+// 		var postion = ol.proj.transform(
+// 			[feature.get('lon'), feature.get('lat')],
+// 			'EPSG:4326',
+// 			'EPSG:3857'
+// 		)
+// 		contentClick.innerHTML = feature.get('desc')
+// 		// Show marker on top
+// 		MarkerOnTop(feature, true)
+// 		// Show Popup
+// 		popupClick.setPosition(postion)
+// 	} else {
+// 		selected = null
+// 		// Hide markers zindex 999
+// 		straitSource.getFeatures().forEach(f => {
+// 			MarkerOnTop(f, false)
+// 		})
+// 		popupClick.setPosition(undefined)
+// 	}
+// })
+
+function AnimatePoint(feature, distance = 100, speed = 0.5) {
+	// console.log("Geometry: ", feature.getGeometry().getCoordinates());
+	var c = feature.getGeometry().getCoordinates();
+	var start = c[1];
+	var end = start + (distance / nilaiZoom);
+	var curr = start;
+	var up = true;
+
+	let intervalId = window.setInterval(() => {
+		if (up) {
+			curr += speed;
+			if (curr > end) {
+				up = false;
+			}
+		} else {
+			curr -= speed;
+			if (curr < start) {
+				up = true;
+			}
+		}
+		var pos = [c[0], curr];
+		feature.getGeometry().setCoordinates(pos);
+	}, 35);
+
+	// Hentikan interval jika tidak lagi diperlukan
+	return () => clearInterval(intervalId);
+}
+
+
+// Configuration Constants
+const GEOCODE_MIN_DELAY = 5000; // 5 seconds between geocoding requests
+const MAX_MARKERS = 10; // Maximum markers to show
+const DEFAULT_ZOOM = 12;
+const DEFAULT_CENTER = [110.422, -6.992]; // Initial map center [lon, lat]
+
+// State Variables
+let lastGeocodeTime = 0;
+let markers = [];
+let nilaiZoom = DEFAULT_ZOOM;
+
+// Geocoding Functions
+async function LocationGeocoding(address) {
+	if (!address.trim()) {
+		console.error('Address cannot be empty');
+		return;
+	}
+
+	try {
+		// const now = Date.now();
+		// if (now - lastGeocodeTime < GEOCODE_MIN_DELAY) {
+		// 	console.log('Geocoding too fast - throttled');
+		// 	return;
+		// }
+		// lastGeocodeTime = now;
+
+		const response = await fetch(
+			`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=jsonv2`
+		);
+
+		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+		const results = await response.json();
+		if (!results || results.length === 0) {
+			throw new Error('No results found for this address');
+		}
+
+		const bestMatch = results[0];
+		updateLocationUI(bestMatch);
+		SetMarker(bestMatch);
+
+	} catch (error) {
+		console.error('Geocoding failed:', error);
+		// alert(`Geocoding error: ${error.message}`);
+	}
+}
+
+function updateLocationUI(location) {
+	const locInput = document.getElementById('location_input');
+	if (locInput) {
+		locInput.value = `${location.lat},${location.lon}`;
+	}
+}
+
+// Marker Functions
+function SetMarker(locationData) {
+	const feature = new ol.Feature({
+		geometry: new ol.geom.Point(ol.proj.fromLonLat([locationData.lon, locationData.lat])),
+		name: 'Location',
+		desc: formatPopupContent(locationData),
+		lat: locationData.lat,
+		lon: locationData.lon
+	});
+
+	feature.setStyle(createMarkerStyle());
+	straitSource.addFeature(feature);
+	markers.push(feature);
+
+	// Maintain marker limit
+	if (markers.length > MAX_MARKERS) {
+		const oldest = markers.shift();
+		straitSource.removeFeature(oldest);
+	}
+
+	CenterMap(locationData.lon, locationData.lat);
+}
+
+function createMarkerStyle() {
+	return new ol.style.Style({
+		image: new ol.style.Icon({
+			src: 'assets/icon-svg/icon-location-pin.svg',
+			scale: 0.8,
+			anchor: [0.5, 1],
+			anchorXUnits: 'fraction',
+			anchorYUnits: 'fraction'
+		})
+	});
+}
+
+function clearMarkers() {
+	markers.forEach(marker => straitSource.removeFeature(marker));
+	markers = [];
+	straitSource.removeFeature(lastMarker)
+	$
+}
+
+// Map Interaction Functions
+function CenterMap(long, lat, zoom = DEFAULT_ZOOM) {
+	map.getView().setCenter(ol.proj.transform([long, lat], 'EPSG:4326', 'EPSG:3857'));
+	map.getView().setZoom(zoom);
+}
+
+// Event Listeners
+map.on('pointermove', function (evt) {
+	const feature = map.forEachFeatureAtPixel(evt.pixel, feat => feat);
+
+	if (feature) {
+		const position = ol.proj.transform(
+			[feature.get('lon'), feature.get('lat')],
+			'EPSG:4326',
+			'EPSG:3857'
+		);
+		document.getElementById('popup-content').innerHTML = feature.get('desc');
+		MarkerOnTop(feature, true);
+		popup.setPosition(position);
+	} else {
+		straitSource.getFeatures().forEach(f => MarkerOnTop(f, false));
+		popup.setPosition(undefined);
+	}
+});
+
+map.on('click', function (evt) {
+	const feature = map.forEachFeatureAtPixel(evt.pixel, feat => feat);
+
+	if (feature) {
+		const position = ol.proj.transform(
+			[feature.get('lon'), feature.get('lat')],
+			'EPSG:4326',
+			'EPSG:3857'
+		);
+		document.getElementById('popup-content-click').innerHTML = feature.get('desc');
+		MarkerOnTop(feature, true);
+		popupClick.setPosition(position);
+	} else {
+		popupClick.setPosition(undefined);
+	}
+});
+
+nilaiZoom = map.getView().getZoom();
+map.on('moveend', function (e) {
+	const newZoom = map.getView().getZoom();
+	if (nilaiZoom !== newZoom) {
+		nilaiZoom = newZoom;
+	}
+});
+
+// Helper Functions
+function MarkerOnTop(feature, show = false) {
+	const style = feature.getStyle();
+	style.zIndex = show ? 9999 : 999;
+	style.zIndex_ = show ? 9999 : 999;
+	feature.setStyle(style);
+}
+
+function formatPopupContent(location) {
+	return `
+    <div class="ol-tooltip">
+      <strong>${location.display_name || 'Location'}</strong><br>
+      Latitude: ${location.lat}<br>
+      Longitude: ${location.lon}<br>
+      <a href="https://www.google.com/maps?q=${location.lat},${location.lon}" target="_blank">
+        View on Google Maps
+      </a>
+    </div>
+  `;
+}
+
+// UI Event Handlers
+function getAddress(e) {
+	LocationGeocoding(e.value);
+}
+
+function getLatLing(e) {
+	console.log('Coordinate input:', e.value);
+}
+
+
+
+
+// function LocationGeocoding(address) {
+// 	fetch('https://nominatim.openstreetmap.org/search?q=' + address + '&format=json').then(function (response) {
+// 		console.log("Geocoding response :: ", response);
+// 		return response.json();
+// 	}).then(function (json) {
+// 		if (json != undefined) {
+// 			console.log(json);
+// 			document.getElementById('location_input').innerHTML = json[0].lat + ' ' + json[0].lon;
+// 			var obj = json[0];
+// 			console.log(obj);
+// 			console.log(obj.lat, obj.lon);
+// 			SetMarker(obj);
+// 		}
+// 	})
+// }
+
+// function SetDivLonLat(lon, lat) {
+// 	var loc = document.getElementById('location_input');
+// 	loc.value = lon + ',' + lat;
+// 	console.log(loc, lon, lat);
+// }
+
+// function CenterMap(long, lat, zoom = 5) {
+// 	console.log("New position Long: " + long + " Lat: " + lat);
+// 	map.getView().setCenter(ol.proj.transform([long, lat], 'EPSG:4326', 'EPSG:3857'));
+// 	map.getView().setZoom(zoom);
+// }
+
+// function SetMarker(evt) {
+// 	if (lastMarker) {
+// 		straitSource.removeFeature(lastMarker);
+// 	}
+
+// 	var feature = new ol.Feature({
+// 			// Object
+// 			geometry: new ol.geom.Point(ol.proj.fromLonLat([evt.lon, evt.lat])),
+// 			// Event
+// 			//geometry: new ol.geom.Point(evt.coordinate)
+// 			name: 'Marker text',
+// 			desc: '<label>Details</label> <br> Latitude: ' + evt.lat + ' Longitude: ' + evt.lon
+// 		}),
+// 		iconStyle = new ol.style.Style({
+// 			image: new ol.style.Icon({
+// 				anchor: [0.5, 80],
+// 				anchorXUnits: 'fraction',
+// 				anchorYUnits: 'pixels',
+// 				opacity: 0.75,
+// 				src: '<?= base_url () ?>assets/icon-svg/icon-location-pin.svg',
+// 				scale: 0.5
+// 			})
+// 		});
+
+// 	feature.setStyle(iconStyle);
+// 	straitSource.addFeature(feature);
+// 	lastMarker = feature;
+// 	// Center
+// 	CenterMap(evt.lon, evt.lat);
+// 	// Set div
+// 	SetDivLonLat(evt.lon, evt.lat);
+
+// }
+
+// Replace lastMarker with markers array
+// let markers = [];
+
+// function SetMarker(evt) {
+// 	const feature = new ol.Feature({
+// 		geometry: new ol.geom.Point(ol.proj.fromLonLat([evt.lon, evt.lat])),
+// 		name: 'Location',
+// 		desc: `<strong>${evt.display_name || 'Location'}</strong><br>
+//            Lat: ${evt.lat}<br>
+//            Lon: ${evt.lon}`,
+// 		lat: evt.lat,
+// 		lon: evt.lon
+// 	});
+
+// 	feature.setStyle(new ol.style.Style({
+// 		image: new ol.style.Icon({
+// 			src: 'assets\icon-svg\icon-location-pin.svg',
+// 			scale: 0.8
+// 		})
+// 	}));
+
+// 	straitSource.addFeature(feature);
+// 	markers.push(feature);
+
+// 	// Optional: Limit to N markers
+// 	if (markers.length > 5) {
+// 		const oldest = markers.shift();
+// 		straitSource.removeFeature(oldest);
+// 	}
+// }
+
+// // Clear all markers
+// function clearMarkers() {
+// 	markers.forEach(marker => straitSource.removeFeature(marker));
+// 	markers = [];
+// }

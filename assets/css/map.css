@@ -1,0 +1,227 @@
+.map {
+	float: left;
+	width: 100%;
+	height: 520px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.map div canvas {
+	border-radius: 10px;
+}
+
+.map .ol-custom-overviewmap,
+.map .ol-custom-overviewmap.ol-uncollapsible {
+	bottom: auto;
+	left: auto;
+	right: 0;
+	top: 0;
+}
+
+.map .ol-custom-overviewmap:not(.ol-collapsed) {
+	border: 1px solid black;
+}
+
+.map .ol-custom-overviewmap .ol-overviewmap-map {
+	border: none;
+	width: 300px;
+}
+
+.map .ol-custom-overviewmap .ol-overviewmap-box {
+	border: 2px solid red;
+}
+
+.map .ol-custom-overviewmap:not(.ol-collapsed) button {
+	bottom: auto;
+	left: auto;
+	right: 1px;
+	top: 1px;
+}
+
+/* Base styles for tooltip */
+.ol-tooltip * {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 300;
+	box-sizing: border-box;
+}
+
+.ol-tooltip {
+	display: flex;
+	flex-direction: column;
+	padding: 0.4em;
+	/* padding: 0.8em; */
+	/* margin: 0.5em 0; */
+	border-radius: 6px;
+	width: 100%;
+}
+
+.ol-tooltip:hover {
+	background: rgba(102, 51, 153, 0.062);
+}
+
+.ol-tooltip-content {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+
+.ol-tooltip img {
+	padding: 0.3em;
+	width: 50px;
+	height: auto;
+	max-width: 30%;
+	object-fit: contain;
+}
+
+.ol-tooltip-text {
+	flex: 1;
+	min-width: 0;
+}
+
+.ol-tooltip-bank a {
+	font-size: 0.9rem;
+	padding: 0.3em;
+	text-decoration: none;
+	color: #0050b8;
+	font-weight: bold;
+	display: inline-block;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ol-tooltip-bank a:hover {
+	color: #c90083;
+}
+
+.ol-tooltip-alamat {
+	font-size: 0.8rem;
+	padding: 0.3em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ol-tooltip-tanggal {
+	font-size: 0.75rem;
+	padding: 0.3em;
+	color: #666;
+}
+
+/* Popup styles */
+.ol-popup {
+	position: absolute;
+	background-color: white;
+	filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.1));
+	/* padding: 0.8em; */
+	padding: 0.4em;
+	border-radius: 10px;
+	border: 1px solid #cccccc2a;
+	bottom: 12px;
+	left: 50%;
+	width: auto;
+	min-width: 200px;
+	max-width: 90vw;
+	transform: translate(-50%, 0);
+	margin-bottom: 10px;
+}
+
+.ol-popup:after,
+.ol-popup:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.ol-popup:after {
+	border-top-color: white;
+	border-width: 10px;
+	left: 50%;
+	margin-left: -10px;
+}
+
+.ol-popup:before {
+	border-top-color: #cccccc2a;
+	border-width: 11px;
+	left: 50%;
+	margin-left: -11px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+	.ol-tooltip {
+		padding: 0.6em;
+	}
+
+	.ol-tooltip-content {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.ol-tooltip img {
+		max-width: 30%;
+		margin-bottom: 0.5em;
+		align-self: center;
+	}
+
+	.ol-tooltip-bank a {
+		white-space: normal;
+	}
+
+	.ol-tooltip-alamat {
+		white-space: normal;
+	}
+
+	.ol-popup {
+		max-width: 95vw;
+		padding: 0.6em;
+	}
+}
+
+@media (min-width: 768px) {
+	.ol-popup {
+		max-width: 350px;
+	}
+}
+
+.marker {
+	background: #222 !important;
+}
+
+.animated {
+	position: relative;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.animated:hover {
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+
+@keyframes hop {
+	0% {
+		margin-bottom: 0px;
+	}
+
+	50% {
+		margin-bottom: 30px;
+	}
+
+	100% {
+		margin-bottom: 0px;
+	}
+}
+
+.hop {
+	-webkit-animation-name: hop;
+	animation-name: hop;
+	animation-iteration-count: infinite;
+	animation-duration: 2s;
+}
