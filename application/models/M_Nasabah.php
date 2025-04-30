@@ -168,7 +168,6 @@ class M_Nasabah extends CI_Model
 				}
 
 			return $results;
-
 			}
 		catch ( Exception $e )
 			{
@@ -223,7 +222,6 @@ class M_Nasabah extends CI_Model
 				{
 				return null;
 				}
-
 			}
 		catch ( Exception $e )
 			{
@@ -250,7 +248,6 @@ class M_Nasabah extends CI_Model
 				{
 				return null;
 				}
-
 			}
 		catch ( Exception $e )
 			{
@@ -281,7 +278,6 @@ class M_Nasabah extends CI_Model
 				{
 				return null;
 				}
-
 			}
 		catch ( Exception $e )
 			{
@@ -314,7 +310,6 @@ class M_Nasabah extends CI_Model
 				{
 				return null;
 				}
-
 			}
 		catch ( Exception $e )
 			{
@@ -393,7 +388,6 @@ class M_Nasabah extends CI_Model
 				{
 				return null;
 				}
-
 			}
 		catch ( Exception $e )
 			{
@@ -426,8 +420,6 @@ class M_Nasabah extends CI_Model
 				'total_sampah'   => (int) $total_sampah,
 				'sampah_disetor' => (int) $used_sampah_count
 			];
-
-
 			}
 		catch ( Exception $e )
 			{
@@ -471,7 +463,6 @@ class M_Nasabah extends CI_Model
 				}
 
 			return $query->num_rows () > 0 ? (object) $query->row () : null;
-
 			}
 		catch ( Exception $e )
 			{
@@ -479,122 +470,6 @@ class M_Nasabah extends CI_Model
 			return null;
 			}
 		}
-
-	// public function tarik_dana_rt ( $id_rt, $id_nasabah_ketua )
-	// 	{
-	// 	$this->db->trans_start ();
-
-	// 	try
-	// 		{
-	// 		// 1. Verify the nasabah is a PKK leader
-	// 		$ketua = $this->db->select ( 'ketua_pkk' )
-	// 			->from ( 'tb_nasabah' )
-	// 			->where ( 'id_nasabah', $id_nasabah_ketua )
-	// 			->get ()
-	// 			->row ();
-
-	// 		if ( ! $ketua || $ketua->ketua_pkk != 1 )
-	// 			{
-	// 			throw new Exception( "Hanya ketua PKK yang dapat melakukan penarikan dana RT" );
-	// 			}
-
-	// 		// 2. Get all nasabah in the same RT
-	// 		$nasabah_rt = $this->db->select ( 'id_nasabah' )
-	// 			->from ( 'tb_nasabah' )
-	// 			->where ( 'id_rt', $id_rt )
-	// 			->get ()
-	// 			->result_array ();
-
-	// 		if ( empty ( $nasabah_rt ) )
-	// 			{
-	// 			throw new Exception( "Tidak ada nasabah di RT ini" );
-	// 			}
-
-	// 		$total_penarikan = 0;
-	// 		$nasabah_ids     = array_column ( $nasabah_rt, 'id_nasabah' );
-
-	// 		$user_ids        = [];
-	// 		$nasabah_data    = [];
-
-	// 		// Prepare data for notification
-	// 		foreach ( $nasabah_rt as $nasabah )
-	// 			{
-	// 			$user_ids[]                         = $nasabah->id_user;
-	// 			$nasabah_data[ $nasabah->id_nasabah ] = $nasabah;
-	// 			}
-
-	// 		// 3. Process each nasabah's transactions and savings
-	// 		foreach ( $nasabah_ids as $id_nasabah )
-	// 			{
-	// 			// Get all 'dicatat' transactions for this nasabah
-	// 			$transactions = $this->db->select ( 'id_transaksi, total_harga' )
-	// 				->from ( 'tb_transaksi_sampah' )
-	// 				->where ( 'id_nasabah', $id_nasabah )
-	// 				->where ( 'status', 'dicatat' )
-	// 				->get ()
-	// 				->result ();
-
-	// 			if ( ! empty ( $transactions ) )
-	// 				{
-	// 				// Calculate total to withdraw
-	// 				$nasabah_total   = array_sum ( array_column ( $transactions, 'total_harga' ) );
-	// 				$total_penarikan += $nasabah_total;
-
-	// 				// Update transactions status to 'dibawa'
-	// 				$this->db->where ( 'id_nasabah', $id_nasabah )
-	// 					->where ( 'status', 'dicatat' )
-	// 					->update ( 'tb_transaksi_sampah', [ 'status' => 'dibawa' ] );
-
-	// 				// Update nasabah's savings
-	// 				$this->db->set ( 'jumlah_tabungan', "jumlah_tabungan - $nasabah_total", false )
-	// 					->where ( 'id_nasabah', $id_nasabah )
-	// 					->update ( 'tb_tabungan_nasabah' );
-
-	// 				// Record withdrawal for this nasabah
-	// 				$this->db->insert ( 'tb_penarikan_dana', [ 
-	// 					'id_nasabah'       => $id_nasabah,
-	// 					'jumlah_penarikan' => $nasabah_total,
-	// 					'status'           => 'berhasil',
-	// 				] );
-	// 				}
-	// 			}
-
-	// 		// 4. Record RT-level withdrawal summary
-	// 		if ( $total_penarikan > 0 )
-	// 			{
-	// 			$this->db->insert ( 'tb_penarikan_rt', [ 
-	// 				'id_rt'             => $id_rt,
-	// 				'id_nasabah_ketua'  => $id_nasabah_ketua,
-	// 				'total_penarikan'   => $total_penarikan,
-	// 				'tanggal_penarikan' => date ( 'Y-m-d H:i:s' ),
-	// 				'status'            => 'berhasil',
-	// 			] );
-	// 			}
-	// 		else
-	// 			{
-	// 			throw new Exception( "Tidak ada Tabungan di RT ini" );
-	// 			}
-
-
-	// 		$this->db->trans_complete ();
-
-	// 		return [ 
-	// 			'success'         => $this->db->trans_status (),
-	// 			'total_penarikan' => $total_penarikan,
-	// 			'jumlah_nasabah'  => count ( $nasabah_ids ),
-	// 		];
-
-	// 		}
-	// 	catch ( Exception $e )
-	// 		{
-	// 		$this->db->trans_rollback ();
-	// 		log_message ( 'error', 'Penarikan dana RT error: ' . $e->getMessage () );
-	// 		return [ 
-	// 			'success' => false,
-	// 			'message' => $e->getMessage (),
-	// 		];
-	// 		}
-	// 	}
 
 
 	public function tarik_dana_rt ( $id_rt, $id_nasabah_ketua )
@@ -635,7 +510,7 @@ class M_Nasabah extends CI_Model
 			// Prepare data for notification
 			foreach ( $nasabah_rt as $nasabah )
 				{
-				$user_ids[]                           = $nasabah->id_user;
+				$user_ids[]                         = $nasabah->id_user;
 				$nasabah_data[ $nasabah->id_nasabah ] = $nasabah;
 				}
 
@@ -764,5 +639,4 @@ class M_Nasabah extends CI_Model
 
 		return $query->result ();
 		}
-
 	}

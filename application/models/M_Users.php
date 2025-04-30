@@ -33,6 +33,13 @@ class M_Users extends CI_Model
 			->count_all_results ( $this->tables[ 'users' ] );
 		}
 
+	public function hitung_total_nasabah_bulan_ini ()
+		{
+		$this->db->where ( 'MONTH(created_at)', date ( 'm' ) );
+		$this->db->where ( 'YEAR(created_at)', date ( 'Y' ) );
+		return $this->db->count_all_results ( 'tb_nasabah' );
+		}
+
 	public function get_staff_and_admins ()
 		{
 		return $this->db->select ( 'id_user' )
@@ -99,30 +106,6 @@ class M_Users extends CI_Model
 			->get ()
 			->result ();
 		}
-
-	/**
-	 * Get user by ID with related data
-	 * @param int $id_user
-	 * @return object|null
-	 */
-	// public function get_user_by_id ( $id_user )
-	// 	{
-	// 	$select_fields = [ 
-	// 		"u.*",
-	// 		"n.id_nasabah",
-	// 		"n.nama",
-	// 		"n.no_telfon",
-	// 		"n.alamat",
-	// 		"n.avatar",
-	// 	];
-
-	// 	return $this->db->select ( $select_fields )
-	// 		->from ( "{$this->tables[ 'users' ]} as u" )
-	// 		->join ( "{$this->tables[ 'nasabah' ]} as n", "u.id_user = n.id_user", "left" )
-	// 		->where ( "u.id_user", $id_user )
-	// 		->get ()
-	// 		->row ();
-	// 	}
 
 	public function get_user_by_id ( $id_user )
 		{
@@ -261,6 +244,9 @@ class M_Users extends CI_Model
 				throw new Exception( 'User not found' );
 				}
 
+			$this->load->model ( 'M_Session' );
+			$this->M_Session->force_logout_user ( $id_user );
+
 			$this->db->delete ( $this->tables[ 'nasabah' ], [ 'id_user' => $id_user ] );
 			$this->db->delete ( $this->tables[ 'users' ], [ 'id_user' => $id_user ] );
 
@@ -337,68 +323,6 @@ class M_Users extends CI_Model
 			}
 		return $this->db->count_all_results ( 'tb_users' ) > 0;
 		}
-
-	// Add dashboard related methods
-	// public function get_dashboard_data($role, $id_user = null)
-	// {
-	// 	$data = [];
-
-	// 	switch ($role) {
-	// 		case 'admin':
-	// 			$data['total_nasabah'] = $this->db->where('role', 'nasabah')->count_all_results('tb_users');
-	// 			$data['total_transaksi'] = $this->db->count_all_results('tb_transaksi_sampah');
-	// 			$data['total_jenis_sampah'] = $this->db->count_all_results('tb_jenis_sampah');
-	// 			$data['recent_transactions'] = $this->get_recent_transactions();
-	// 			break;
-
-	// 		case 'petugas':
-	// 			$data['pending_transactions'] = $this->get_pending_transactions();
-	// 			$data['today_transactions'] = $this->get_today_transactions();
-	// 			$data['sampah_data'] = $this->get_sampah_data();
-	// 			break;
-
-	// 		case 'nasabah':
-	// 			$data['my_transactions'] = $this->get_nasabah_transactions($id_user);
-	// 			$data['total_setoran'] = $this->get_nasabah_total_setoran($id_user);
-	// 			$data['latest_prices'] = $this->get_latest_prices();
-	// 			break;
-	// 	}
-
-	// 	return $data;
-	// }
-
-	// private function get_recent_transactions($limit = 5)
-	// {
-	// 	$this->db->select('ts.*, n.nama as nama_nasabah, s.nama_sampah')
-	// 		->from('tb_transaksi_sampah ts')
-	// 		->join('tb_nasabah n', 'n.id_nasabah = ts.id_nasabah')
-	// 		->join('tb_sampah s', 's.id_sampah = ts.id_sampah')
-	// 		->order_by('ts.created_at', 'DESC')
-	// 		->limit($limit);
-	// 	return $this->db->get()->result();
-	// }
-
-	// private function get_pending_transactions()
-	// {
-	// 	return $this->db->where('status', 'pending')
-	// 		->get('tb_transaksi_sampah')
-	// 		->result();
-	// }
-
-	// private function get_nasabah_transactions($id_user)
-	// {
-	// 	$nasabah = $this->db->where('id_user', $id_user)
-	// 		->get('tb_nasabah')
-	// 		->row();
-
-	// 	if ($nasabah) {
-	// 		return $this->db->where('id_nasabah', $nasabah->id_nasabah)
-	// 			->order_by('created_at', 'DESC')
-	// 			->get('tb_transaksi_sampah')
-	// 			->result();
-	// 	}
-	// 	return [];
-	// }
 
 	// Private helper methods
 	private function prepare_user_data ( $data )

@@ -10,6 +10,7 @@
 						<h4>Daftar Nasabah</h4>
 						<?= validation_errors('<div class="error text-danger">', '</div>'); ?>
 
+						<!-- <h6 class="fw-light">Signing up is easy. It only takes a few steps</h6> -->
 						<h6 class="fw-light">bergabung dengan kami. ciptakan lingkungan bersih</h6>
 						<form class="pt-3" method="POST" action="<?= base_url('Auth-Register'); ?>">
 
@@ -90,6 +91,9 @@
 													</option>
 												<?php endforeach; ?>
 											</select>
+											<div class="invalid-feedback">
+												<?= form_error('id_rt'); ?>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
@@ -137,10 +141,21 @@
 								</div>
 								<div class="mt-3 d-flex flex-wrap justify-content-center">
 									<button type="button" class="btn btn-block btn-dark btn-lg auth-form-btn fw-bolder fs-6 mx-auto my-2 order-2 order-md-1" onclick="location.href='<?= base_url('Auth-Login'); ?>'">Kembali <i class="icon-logout align-middle m-0 p-1 fw-bolder fs-6"></i></button>
-									<button type="submit" class="btn btn-block btn-primary btn-lg auth-form-btn fw-bolder fs-6 mx-auto my-2 order-1 order-md-2">Buat
+									<button type="submit" class="btn btn-block btn-primary btn-lg auth-form-btn fw-bolder fs-6 mx-auto my-2 order-1 order-md-2" disabled>Buat
 										Akun <i class="icon-login align-middle m-0 p-1 fw-bolder fs-6"></i></button>
 								</div>
 							</div>
+
+
+
+							<!-- <div class="mb-4">
+								<div class="form-check">
+									<label class="form-check-label text-muted">
+										<input type="checkbox" class="form-check-input">
+										Saya menyetujui kebijkan yang berlaku
+										<i class="input-helper"></i></label>
+								</div>
+							</div> -->
 
 						</form>
 					</div>

@@ -6,8 +6,16 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+	<!-- ===============================================-->
+	<!--    Document Title-->
+	<!-- ===============================================-->
 	<title>BSAL | Bank Sampah Artha Lestari</title>
 
+
+	<!-- ===============================================-->
+	<!--    Favicons-->
+	<!-- ===============================================-->
 	<link rel="apple-touch-icon" sizes="180x180" href="<?= base_url() ?>assets/images/bsal.ico">
 	<link rel="icon" type="image/png" sizes="32x32" href="<?= base_url() ?>assets/images/bsal.ico">
 	<link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/images/bsal.ico">
@@ -16,13 +24,20 @@
 	<meta name="msapplication-TileImage" content="<?= base_url() ?>assets/images/bsal.ico">
 	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/mdi/css/materialdesignicons.min.css">
+	<link href="<?= base_url() ?>assets/css/map.css?v=1" rel="stylesheet" />
 
+
+
+	<!-- ===============================================-->
+	<!--    Stylesheets-->
+	<!-- ===============================================-->
 	<link href="<?= base_url() ?>assets/landing/css/theme.css" rel="stylesheet" />
 	<link href="<?= base_url() ?>assets/css/map.css" rel="stylesheet" />
 
 	<script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.2.4/ol.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 
@@ -63,13 +78,49 @@
 			line-height: 50px;
 		}
 	</style>
+	<!-- ===============================================-->
+	<!--    Main Content-->
+	<!-- ===============================================-->
 
 	<main class="main" id="top">
+		<!-- <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fw-bold fs-2" href="#">
+        <img class="d-inline-block me-3" src="<?= base_url() ?>assets/images/logo.webp" alt="" />
+            <small class="ms-3">(Bank Sampah Artha Lestari)</small>
+          </a>
+    
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                  aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto pt-2 pt-lg-0">
+              <li class="nav-item"><a class="nav-link fw-bold active" aria-current="page" href="#">Beranda</a></li>
+              <li class="nav-item"><a class="nav-link" href="#hasil-karya">Hasil Karya</a></li>
+              <li class="nav-item"><a class="nav-link" href="#struktur-organisasi">Struktur Organisasi</a></li>
+              <li class="nav-item"><a class="nav-link" href="#wilayah">Wilayah</a></li>
+              <li class="nav-item"><a class="nav-link" href="#about">Tentang kami</a></li>
+              <li class="nav-item">
+                <a class=" <?= $login != 'Auth-Login' ? 'btn btn-outline-primary' : 'nav-link' ?> "
+                   href="<?= site_url($login) ?>">
+                  <?= $login != 'Auth-Login' ? 'Dashboard' : 'Masuk' ?>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav> -->
+
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll" style="background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
 			<div class="container">
 				<!-- Logo with responsive sizing -->
 				<a class="navbar-brand d-flex align-items-center" href="#">
 					<img src="<?= base_url() ?>assets/images/logo.webp" alt="Bank Sampah Artha Lestari" style="height: 50px; width: auto; max-width: 120px;" class="d-inline-block align-top">
+					<!-- <span class="d-none d-md-inline ms-2" style="font-size: 1rem; font-weight: bold;">
+              Bank Sampah Artha Lestari
+            </span> -->
 				</a>
 
 				<!-- Mobile toggle button -->

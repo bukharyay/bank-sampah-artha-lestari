@@ -1,51 +1,156 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 
-class C_JenisSampah extends CI_Controller
-{
-	private $allowed_roles = ['admin', 'petugas'];
+/**
+ * Controller Jenis Sampah
+ */
+
+class C_JenisSampah extends MY_Controller
+	{
+	protected $allowed_roles = [ 'admin', 'petugas' ];
 	public $user_session = [];
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->model('M_Sampah');
-		$this->load->library('UserSession');
-		$this->_check_auth();
-	}
-
-
-	private function _check_auth()
-	{
-		if (!in_array($this->session->userdata('role'), $this->allowed_roles)) {
-			redirect('Auth-Login');
+	public function __construct ()
+		{
+		parent::__construct ();
+		$this->load->model ( 'M_Sampah' );
+		$this->_check_auth ();
 		}
-		$this->user_session = $this->usersession->get_user_data();
-	}
 
-	public function check_jenis_sampah($id_jenis_sampah)
-	{
-		if (!$this->M_Sampah->jenis_sampah_exists($id_jenis_sampah)) {
-			$this->form_validation->set_message('check_jenis_sampah', 'Jenis sampah tidak tersedia');
-			return FALSE;
-		}
-		return TRUE;
-	}
+	// ================= MAIN METHODS =================
 
-	public function index()
-	{
-		$data = [
+	/**
+	 * Display jenis sampah management page
+	 */
+	public function index ()
+		{
+		$data = [ 
 			'title'             => 'Jenis Sampah',
-			'greeting'          => get_greeting(),
-			'data_jenis_sampah' => $this->M_Sampah->get_jenis_sampah(),
+			'greeting'          => get_greeting (),
+			'data_jenis_sampah' => $this->M_Sampah->get_jenis_sampah (),
 		];
 
-		$this->_load_view($data);
-	}
+		$this->_load_view ( $data );
+		}
 
-	private function _load_view($data)
-	{
-		$views = [
+	// ================= CRUD OPERATIONS =================
+
+	/**
+	 * Add new jenis sampah
+	 */
+	public function add_jenis_sampah ()
+		{
+		if ( ! $this->_validate_jenis_sampah () )
+			{
+			$this->index ();
+			return;
+			}
+
+		$data = $this->_get_jenis_sampah_data ();
+
+		if ( $this->M_Sampah->add_jenis_sampah ( $data ) )
+			{
+			$this->session->set_flashdata ( 'success', 'Kategori Sampah berhasil ditambahkan!' );
+			}
+		else
+			{
+			$this->session->set_flashdata ( 'error', 'Gagal menambahkan Jenis sampah!' );
+			}
+
+		redirect ( 'Manage-Jenis-Sampah' );
+		}
+
+	/**
+	 * Edit existing jenis sampah
+	 */
+	public function edit_jenis_sampah ( $id_jenis_sampah )
+		{
+		if ( ! $this->_validate_jenis_sampah () )
+			{
+			$this->index ();
+			return;
+			}
+
+		$data = $this->_get_jenis_sampah_data ( true );
+
+		if ( $this->M_Sampah->update_jenis_sampah ( $id_jenis_sampah, $data ) )
+			{
+			$this->session->set_flashdata ( 'success', 'Kategori Sampah berhasil diperbarui!' );
+			}
+		else
+			{
+			$this->session->set_flashdata ( 'error', 'Gagal memperbarui kategori sampah!' );
+			}
+
+		redirect ( 'Manage-Jenis-Sampah' );
+		}
+
+	/**
+	 * Delete jenis sampah
+	 */
+	public function delete_jenis_sampah ( $id_jenis_sampah )
+		{
+		if ( $this->M_Sampah->delete_jenis_sampah ( $id_jenis_sampah ) )
+			{
+			$this->session->set_flashdata ( 'success', 'Kategori Sampah berhasil dihapus!' );
+			}
+		else
+			{
+			$this->session->set_flashdata ( 'error', 'Gagal menghapus kategori sampah!' );
+			}
+
+		redirect ( 'Manage-Jenis-Sampah' );
+		}
+
+	// ================= VALIDATION METHODS =================
+
+	/**
+	 * Check if jenis sampah exists
+	 */
+	public function check_jenis_sampah ( $id_jenis_sampah )
+		{
+		if ( ! $this->M_Sampah->jenis_sampah_exists ( $id_jenis_sampah ) )
+			{
+			$this->form_validation->set_message ( 'check_jenis_sampah', 'Jenis sampah tidak tersedia' );
+			return false;
+			}
+		return true;
+		}
+
+	/**
+	 * Validate jenis sampah input
+	 */
+	private function _validate_jenis_sampah ()
+		{
+		$this->load->library ( 'form_validation' );
+		return $this->form_validation->run ( 'jenis_sampah' );
+		}
+
+	// ================= HELPER METHODS =================
+
+	/**
+	 * Get jenis sampah data from POST
+	 */
+	private function _get_jenis_sampah_data ( $is_edit = false )
+		{
+		$data = [ 
+			'jenis_sampah' => $this->input->post ( 'jenis_sampah', true ),
+		];
+
+		if ( $is_edit )
+			{
+			$data[ 'id_jenis_sampah' ] = $this->input->post ( 'id_jenis_sampah', true );
+			}
+
+		return $data;
+		}
+
+	/**
+	 * Load view with layout
+	 */
+	private function _load_view ( $data )
+		{
+		$views = [ 
 			'Layout/App/V_header',
 			'Layout/App/V_topbar',
 			'Layout/App/V_sidebar',
@@ -53,86 +158,9 @@ class C_JenisSampah extends CI_Controller
 			'Layout/App/V_footer',
 		];
 
-		foreach ($views as $view) {
-			$this->load->view($view, $data);
-		}
-	}
-
-	private function _validate_jenis_sampah()
-	{
-		$this->load->library('form_validation');
-		return $this->form_validation->run('jenis_sampah');
-	}
-
-	private function _get_jenis_sampah_data($isEdit = false)
-	{
-
-		$data = [
-			'jenis_sampah' => $this->input->post('jenis_sampah', TRUE),
-		];
-
-		if ($isEdit) {
-			$data['id_jenis_sampah'] = $this->input->post('id_jenis_sampah', true);
-		}
-
-		return $data;
-	}
-
-	public function add_jenis_sampah()
-	{
-		if (!$this->_validate_jenis_sampah()) {
-			return $this->index();
-		}
-
-		$data = $this->_get_jenis_sampah_data();
-
-		if ($this->M_Sampah->add_jenis_sampah($data)) {
-			$this->session->set_flashdata('success', 'Kategori Sampah berhasil ditambahkan!');
-		} else {
-			$this->session->set_flashdata('error', 'Gagal menambahkan Jenis sampah!');
-		}
-
-		redirect('Manage-Jenis-Sampah');
-	}
-
-	public function edit_jenis_sampah($idjenisSampah)
-	{
-		$id_jenis_sampah = $this->input->post('id_jenis_sampah', true) == $idjenisSampah ? $idjenisSampah : '';
-		if ($this->form_validation->run('jenis_sampah') == false) {
-			$this->index();
-		} else {
-			if (!empty($id_jenis_sampah)) {
-				if ($this->_edit_jenis_sampah_process($id_jenis_sampah)) {
-					$this->session->set_flashdata('success', 'Kategori Sampah updated successfully!');
-				} else {
-					$this->session->set_flashdata('error', 'Failed to update kategori sampah. Please try again.');
-				}
-			} else {
-				$this->session->set_flashdata('warning', 'Data Kategori Sampah tidak valid!');
-				return FALSE;
+		foreach ( $views as $view )
+			{
+			$this->load->view ( $view, $data );
 			}
-			redirect('Manage-Jenis-Sampah');
 		}
 	}
-
-	private function _edit_jenis_sampah_process($idjenisSampah)
-	{
-		$data = $this->_get_jenis_sampah_data(true);
-
-		return $this->M_Sampah->update_jenis_sampah($idjenisSampah, $data);
-	}
-
-	public function delete_jenis_sampah($idjenisSampah)
-	{
-		$id_jenis_sampah = $this->input->post('id_jenis_sampah', true) == $idjenisSampah ? $idjenisSampah : '';
-
-		if (!empty($id_jenis_sampah)) {
-			if ($this->M_Sampah->delete_jenis_sampah($idjenisSampah)) {
-				$this->session->set_flashdata('success', 'Kategori Sampah deleted successfully!');
-			} else {
-				$this->session->set_flashdata('error', 'Failed to delete kategori sampah. Please try again.');
-			}
-			redirect('Manage-Jenis-Sampah');
-		}
-	}
-}

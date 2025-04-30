@@ -1,8 +1,6 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +25,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
     <!-- inject:css -->
     <link rel="stylesheet" href=" <?php echo config_item ( 'base_url' ); ?>assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href=" <?php echo config_item ( 'base_url' ); ?>assets/images/bsal.co" />
+    <link rel="shortcut icon" href=" <?php echo config_item ( 'base_url' ); ?>assets/images/bsal.ico" />
   </head>
 
   <body>
@@ -38,7 +36,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
             <div class="col-lg-7 mx-auto text-white">
               <div class="row align-items-center d-flex flex-row">
                 <div class="col-lg-6 text-lg-right pr-lg-4">
-                  <h1 class="display-1 mb-0">404</h1>
+                  <h1 class="display-1 mb-0">403</h1>
                 </div>
                 <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
                   <h2>SORRY!</h2>

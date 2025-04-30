@@ -178,7 +178,8 @@
 .select2-container--default .select2-selection--single .select2-selection__clear {
 	cursor: pointer;
 	float: right;
-	font-weight: bold
+	font-weight: bold;
+	font-size: 30px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
@@ -187,7 +188,7 @@
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
 	/* height: 26px; */
-	height: 44px;
+	height: 48px;
 	position: absolute;
 	top: 1px;
 	right: 4px;

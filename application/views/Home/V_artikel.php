@@ -85,13 +85,13 @@
 					<h6 class="mb-3">Bagikan Artikel:</h6>
 					<div class="d-flex gap-2">
 						<a href="https://www.facebook.com/sharer/sharer.php?u=<?= current_url() ?>" class="btn btn-sm btn-outline-primary rounded-pill" target="_blank">
-							<i class="mdi mdi-facebook me-1"></i> Facebook
+							<i class="mdi mdi-facebook me-1 icon icon-md"></i> Facebook
 						</a>
 						<a href="https://twitter.com/intent/tweet?text=<?= urlencode($karya->judul) ?>&url=<?= current_url() ?>" class="btn btn-sm btn-outline-info rounded-pill" target="_blank">
-							<i class="mdi mdi-twitter me-1"></i> Twitter
+							<i class="mdi mdi-twitter me-1 icon icon-md"></i> Twitter
 						</a>
 						<a href="https://wa.me/?text=<?= urlencode("Baca artikel ini: " . $karya->judul . " " . current_url()) ?>" class="btn btn-sm btn-outline-success rounded-pill" target="_blank">
-							<i class="mdi mdi-whatsapp me-1"></i> WhatsApp
+							<i class="mdi mdi-whatsapp me-1 icon icon-md"></i> WhatsApp
 						</a>
 					</div>
 				</div>
@@ -123,10 +123,10 @@
 	</div>
 	<!--/.bg-holder-->
 
+	<div class="bg-holder" style="background-image:url(<?= base_url() ?>assets/landing/img/illustrations/dot-2.png);background-position:left top;background-size:initial;margin-top:120px;margin-left:-35px;">
+	</div>
+	<!--/.bg-holder-->
 	<div class="container">
-		<div class="bg-holder" style="background-image:url(<?= base_url() ?>assets/landing/img/illustrations/dot-2.png);background-position:left top;background-size:initial;margin-top:120px;margin-left:-35px;">
-		</div>
-		<!--/.bg-holder-->
 
 		<div class="row flex-start px-2">
 			<div class="col-auto text-start">
@@ -142,7 +142,7 @@
 				<?php foreach ($related_articles as $related) : ?>
 					<?php if ($related->id_hasil_karya != $karya->id_hasil_karya) : ?>
 						<div class="col-12 col-sm-9 col-md-4 mb-4">
-							<div class="shadow-sm rounded-3 hover-effect">
+							<div class="shadow-sm rounded-3 hover-effect h-100">
 								<div class="card h-100 rounded shadow-sm border-0 overflow-hidden ">
 									<!-- Card Image -->
 									<div class="position-relative overflow-hidden" style="height: 300px; ">
@@ -168,12 +168,12 @@
 										<!-- Metadata -->
 										<div class="d-flex flex-wrap justify-content-between align-items-center  small mb-3">
 											<div class="me-2 mb-1">
-												<i class="mdi mdi-account-outline me-1 align-middle"></i>
+												<i class="mdi mdi-account-outline me-1 icon icon-sm"></i>
 												upload oleh <?= htmlspecialchars($related->author) ?>
 											</div>
 											<div class="mb-1">
-												<i class="mdi mdi-calendar me-1 align-middle"></i>
-												<?= $CI->_format_waktu(date('d M Y', strtotime($related->tanggal_dibuat)), 'hari, bulan tahun') ?>
+												<i class="mdi mdi-calendar me-1 icon icon-sm"></i>
+												<?= $CI->_format_waktu(date('d M Y', strtotime($related->tanggal_dibuat)), 'hari, tanggal bulan tahun') ?>
 											</div>
 										</div>
 
@@ -181,10 +181,10 @@
 										<div class="d-flex justify-content-between align-items-center border-top pt-3">
 											<a href="<?= base_url('artikel/') . url_title($related->slug ?? '') ?>" class="btn btn-link text-primary text-decoration-none p-0 ">
 												Baca Selengkapnya
-												<i class="mdi mdi-arrow-right ms-1 align-middle"></i>
+												<i class="mdi mdi-arrow-right ms-1 icon icon-sm"></i>
 											</a>
 											<div class=" small">
-												<i class="mdi mdi-eye me-1 align-middle"></i><?= number_format($related->read_count) ?>
+												<i class="mdi mdi-eye me-1 icon icon-sm"></i><?= number_format($related->read_count) ?>
 											</div>
 										</div>
 									</div>
@@ -195,10 +195,16 @@
 				<?php endforeach; ?>
 			<?php endif; ?>
 
-			<div class="text-center pt-4 z-index-2">
-				<a href="<?= base_url('artikel/semua') ?>" class="btn btn-lg btn-outline-primary rounded-pill z-index-2 hover-top" type="submit">Lihat Semua</a>
+			<div class="text-center mt-5">
+				<a href="<?= base_url('artikel/semua') ?>" class="btn btn-outline-primary rounded-pill px-4">
+					Lihat Semua Artikel <i class="icon icon-sm mdi mdi-arrow-right ms-2"></i>
+				</a>
 			</div>
 
 		</div>
 	</div>
 </section>
+
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->

@@ -8,6 +8,7 @@
 		</div>
 		<div>
 			<a class="navbar-brand brand-logo" href="<?= base_url(); ?>">
+				<!-- <b>BSAL</b> -->
 				<img src="<?= base_url() ?>assets/images/logo.webp" class="img-fluid p-3" style="height: auto !important;" alt="logo" />
 			</a><br>
 			<a class="navbar-brand brand-logo-mini" href="<?= base_url(); ?>">
@@ -18,7 +19,7 @@
 	<div class="navbar-menu-wrapper d-flex align-items-center ">
 		<ul class="navbar-nav">
 			<li class="nav-item font-weight-semibold d-none d-sm-block d-lg-block ms-0">
-				<h1 class="welcome-text"><?= $greeting ?? 'Selamat Datang' ?>, <span class="text-black fw-bold"><?= $this->session->userdata('name') ?></span></h1>
+				<h1 class="welcome-text"><?= $greeting ?? 'Selamat Datang' ?>, <span class="text-black fw-bold"><?= $this->session->userdata('name') ?? '' ?></span></h1>
 				<h3 class="welcome-sub-text"> Bank Sampah Artha Lestari
 				</h3>
 			</li>

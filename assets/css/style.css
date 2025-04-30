@@ -23048,7 +23048,7 @@ button:focus {
 }
 
 textarea {
-	resize: none;
+	/* resize: none; */
 	overflow-x: hidden;
 }
 
@@ -27765,7 +27765,7 @@ select.typeahead,
 select.tt-query,
 select.tt-hint {
 	padding: .4375rem .75rem;
-	border: 0;
+	/* border: 0; */
 	outline: 1px solid #dee2e6;
 	/* color: #c9c8c8; */
 	color: #212529;
@@ -33747,7 +33747,7 @@ table.dataTable tbody td.select-checkbox:after {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-	line-height: 14px;
+	line-height: 20px;
 }
 
 .select2-container--default .select2-dropdown {
@@ -34746,7 +34746,7 @@ div.tagsinput span.tag a {
 .auth form .form-group .typeahead,
 .auth form .form-group .tt-query,
 .auth form .form-group .tt-hint {
-	background: transparent;
+	/* background: transparent; */
 	border-radius: 0;
 	font-size: .9375rem;
 }

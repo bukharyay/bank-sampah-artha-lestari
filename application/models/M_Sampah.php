@@ -73,7 +73,6 @@ class M_Sampah extends CI_Model
 			->order_by ( 'h.periode', 'DESC' )
 			->order_by ( 'h.created_at', 'DESC' )
 			->get_compiled_select ();
-		// ->get ();
 
 		$query = $this->db->query (
 			"SELECT *
@@ -252,52 +251,12 @@ class M_Sampah extends CI_Model
 		return $query->num_rows () > 0 ? $query->row () : [ 'error' => 'Data lama tidak bisa dirollback!' ];
 		}
 
-	// public function rollback_harga ( $data )
-	// 	{
-	// 	try
-	// 		{
-	// 		$this->db->trans_start ();
-
-	// 		// Get the latest two entries for the given id_sampah
-	// 		$latest_entries = $this->db->select ( 'id_harga' )
-	// 			->from ( $this->tables[ 'harga' ] )
-	// 			->where ( 'id_sampah', $data[ 'id_sampah' ] )
-	// 			->where ( 'periode >= NOW() - INTERVAL 1 WEEK' )
-	// 			->order_by ( 'periode', 'DESC' )
-	// 			->order_by ( 'created_at', 'DESC' )
-	// 			->get ()
-	// 			->result ();
-
-	// 		if ( count ( $latest_entries ) > 1 )
-	// 			{
-	// 			// Delete the latest entry
-	// 			$this->db->where ( 'id_harga', $latest_entries[ 0 ]->id_harga )
-	// 				->delete ( $this->tables[ 'harga' ] );
-	// 			}
-	// 		else
-	// 			{
-	// 			return false;
-	// 			}
-
-	// 		$this->db->trans_complete ();
-
-	// 		return $this->db->trans_status ();
-	// 		}
-	// 	catch ( Exception $e )
-	// 		{
-	// 		log_message ( 'error', 'Error rolling back harga: ' . $e->getMessage () );
-	// 		return false;
-	// 		}
-	// 	}
-
-
 	public function rollback_latest_harga ( $id_sampah )
 		{
 		$this->db->trans_start ();
 
 		try
 			{
-			// 1. Get the latest price to be rolled back
 			$current_price = $this->db->select ( 'id_harga, id_sampah, harga_per_kg' )
 				->from ( 'tb_harga_sampah' )
 				->where ( 'id_sampah', $id_sampah )
@@ -311,7 +270,6 @@ class M_Sampah extends CI_Model
 				throw new Exception( "No price found for this sampah" );
 				}
 
-			// 2. Get affected transactions before deletion
 			$affected_transactions = $this->db->select ( 'ts.id_nasabah, ts.total_harga, tn.jumlah_tabungan' )
 				->from ( 'tb_transaksi_sampah ts' )
 				->join ( 'tb_tabungan_nasabah tn', 'ts.id_nasabah = tn.id_nasabah', 'left' )
@@ -320,7 +278,6 @@ class M_Sampah extends CI_Model
 				->get ()
 				->result ();
 
-			// 3. Calculate total to deduct from savings
 			$total_to_deduct  = 0;
 			$affected_nasabah = [];
 
@@ -330,26 +287,15 @@ class M_Sampah extends CI_Model
 				$affected_nasabah[ $trans->id_nasabah ] = true;
 				}
 
-			// 4. Delete the price (will cascade delete transactions)
 			$this->db->where ( 'id_harga', $current_price->id_harga )
 				->delete ( 'tb_harga_sampah' );
 
-			// 5. Update nasabah savings for each affected nasabah
 			foreach ( array_keys ( $affected_nasabah ) as $id_nasabah )
 				{
 				$this->db->set ( 'jumlah_tabungan', "jumlah_tabungan - $total_to_deduct", false )
 					->where ( 'id_nasabah', $id_nasabah )
 					->update ( 'tb_tabungan_nasabah' );
 				}
-
-			// 6. Log the rollback
-			// $this->db->insert ( 'tb_harga_log', [ 
-			// 	'id_sampah'  => $id_sampah,
-			// 	'id_harga'   => $current_price->id_harga,
-			// 	'action'     => 'rollback',
-			// 	'notes'      => "Dihapus dengan $total_to_deduct dikurangi dari tabungan",
-			// 	'created_at' => date ( 'Y-m-d H:i:s' ),
-			// ] );
 
 			$this->db->trans_complete ();
 			return $this->db->trans_status ();

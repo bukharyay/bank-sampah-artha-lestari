@@ -32,7 +32,7 @@ class M_Notifikasi extends CI_Model
   public function get_notifikasi ( $id_user, $limit = 5 )
     {
     $this->db->where ( 'id_user', $id_user );
-    $this->db->order_by ( 'dibaca', 'ASC' ); // Prioritize unread notifications
+    $this->db->order_by ( 'dibaca', 'ASC' );
     $this->db->order_by ( 'created_at', 'DESC' );
     $this->db->limit ( $limit );
     return $this->db->get ( $this->tables[ 'notifikasi' ] )->result ();

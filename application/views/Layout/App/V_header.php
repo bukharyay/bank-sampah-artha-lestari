@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <!-- Mirrored from www.bootstrapdash.com/demo/star-admin2-pro/template/demo/vertical-default-light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 31 Oct 2021 14:59:54 GMT -->
 
 <head>
@@ -22,15 +24,20 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/typicons/typicons.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/simple-line-icons/css/simple-line-icons.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/css/vendor.bundle.base.css">
-	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/select2/select2.min.css">
-	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/select2/select2.min.css?v=1">
+	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 
 	<!-- Plugin css for this page -->
+
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"> -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.2/css/buttons.bootstrap4.css">
-
+	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
+	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/js/select.dataTables.min.css"> -->
 	<!-- inject:css -->
-	<link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css?v=1">
+	<!-- <link rel="shortcut icon" href="<?= base_url() ?>assets/images/favicon.png" /> -->
 
 	<!-- Bootstrap 4 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -38,6 +45,9 @@
 
 	<!-- plugins:js -->
 	<script src="<?= base_url() ?>assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<!-- Plugin js for this page -->
+	<!-- <script src="<?= base_url() ?>assets/vendors/datatables.net/jquery.dataTables.js"></script> -->
+	<!-- <script src="<?= base_url() ?>assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script> -->
 
 	<!-- DataTables -->
 	<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
@@ -80,3 +90,28 @@
 </head>
 
 <body>
+	<!-- <div class="container-scroller">
+      <div class="row p-0 m-0 proBanner" id="proBanner">
+        <div class="col-md-12 p-0 m-0">
+          <div class="card-body card-body-padding px-3 d-flex align-items-center justify-content-between">
+            
+          <div class="ps-lg-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <p class="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with
+                  this template!</p>
+                <a href="https://www.bootstrapdash.com/product/star-admin-pro/?utm_source=navbar&amp;utm_medium=productdemo&amp;utm_campaign=getpro"
+                   target="_blank" class="btn me-2 buy-now-btn border-0">Buy Now</a>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between">
+              <a href="https://www.bootstrapdash.com/product/star-admin-pro/"><i
+                   class="ti-home me-3 text-white"></i></a>
+              <button id="bannerClose" class="btn border-0 p-0">
+                <i class="ti-close text-white"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div> -->

@@ -12,10 +12,10 @@ let VectorSource = ol.source.Vector
 let VectorLayer = ol.layer.Vector
 
 // Configuration Constants
-const GEOCODE_MIN_DELAY = 5000; 
-const MAX_MARKERS = 10; 
+const GEOCODE_MIN_DELAY = 5000; // 5 seconds between geocoding requests
+const MAX_MARKERS = 10; // Maximum markers to show
 const DEFAULT_ZOOM = 18;
-const DEFAULT_CENTER = [110.4218, -7.07300]; 
+const DEFAULT_CENTER = [110.4218, -7.07300]; // Initial map center [lon, lat]
 
 let nilaiZoom = DEFAULT_ZOOM;
 
@@ -104,11 +104,6 @@ function AnimatePoint(feature, distance = 100, speed = 0.5) {
 	// Hentikan interval jika tidak lagi diperlukan
 	return () => clearInterval(intervalId);
 }
-
-
-
-
-
 
 function createMarkerStyle() {
 	return new ol.style.Style({

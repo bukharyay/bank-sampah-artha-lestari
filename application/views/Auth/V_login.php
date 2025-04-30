@@ -35,13 +35,14 @@
 											<i class="ti-lock text-dark"></i>
 										</span>
 									</div>
-									<input type="password" class="form-control form-control-lg border-left-0 <?= form_error('password') ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password">
+									<input type="password" class="form-control form-control-lg border-left-0 <?= form_error('password') ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" required>
 									<div class="invalid-feedback">
 										<?= form_error('password'); ?>
 									</div>
 								</div>
 							</div>
 							<div class="my-2 d-flex justify-content-center">
+								<!-- <a href="#" class="auth-link text-black">Lupa password?</a> -->
 							</div>
 							<div class="mb-2 d-flex flex-wrap justify-content-center">
 								<button type="button" onclick="location.href='<?= base_url(''); ?>'" value="Kembali" class="btn  btn-secondary  fw-bolder fs-6 mx-auto my-2 order-3 order-md-1 ">
@@ -52,7 +53,7 @@
 									Daftar
 									<i class=" icon-logout align-middle m-0 p-1 fw-bolder fs-6"></i>
 								</button>
-								<button type="submit" class="btn btn-primary auth-form-btn fw-bolder fs-6 mx-auto my-2 order-1 order-md-3">
+								<button type="submit" class="btn btn-primary auth-form-btn fw-bolder fs-6 mx-auto my-2 order-1 order-md-3" disabled>
 									Login
 									<i class="icon-login align-middle m-0 p-1 fw-bolder fs-6"></i>
 								</button>

@@ -6,12 +6,14 @@ $route[ 'Home' ]                 = 'C_Home';
 $route[ '404_override' ]         = '';
 $route[ 'translate_uri_dashes' ] = FALSE;
 
+$route[ 'Key-Creator' ] = 'Key_creator';
+
 // Artikel
 $route[ 'artikel/semua' ]                         = 'C_Home/semua_artikel';
 $route[ 'artikel/semua/(:num)' ]                  = 'C_Home/semua_artikel/$1';
-$route[ 'artikel/kategori/(:any)' ]               = 'C_Home/artikel_by_category/$1';
-$route[ 'artikel/kategori/(:any)/(:any)' ]        = 'C_Home/artikel_by_subcategory/$1/$2';
-$route[ 'artikel/kategori/(:any)/(:any)/(:num)' ] = 'C_Home/artikel_by_subcategory/$1/$2/$3';
+$route[ 'artikel/kategori/(:any)' ]               = 'C_Home/semua_artikel/$1';
+$route[ 'artikel/kategori/(:any)/(:any)' ]        = 'C_Home/semua_artikel/$1/$2';
+$route[ 'artikel/kategori/(:any)/(:any)/(:num)' ] = 'C_Home/semua_artikel/$1/$2/$3';
 $route[ 'artikel/(:any)' ]                        = 'C_Home/artikel/$1';
 
 $route[ 'Struktur-Organisasi' ] = 'C_Home/struktur_organisasi';
@@ -22,10 +24,10 @@ $route[ 'Tentang-Kami' ]        = 'C_Home/tentang_kami';
 $route[ 'Auth-Register' ] = 'C_Auth/register';
 $route[ 'Auth-Login' ]    = 'C_Auth/index';
 $route[ 'Auth-Logout' ]   = 'C_Auth/logout';
+$route[ 'Auth-Validate' ] = 'C_Auth/validate_field';
 
 // Admin
 $route[ 'Dashboard-Admin' ] = 'C_Admin';
-
 
 // Admin - Users Management
 $route[ 'Manage-Users' ]        = 'C_Users';

@@ -41,9 +41,15 @@ class M_Hasil_Karya extends CI_Model
 		$this->db->join ( 'tb_jenis_sampah js', 'js.id_jenis_sampah = hk.id_jenis_sampah', 'left' );
 		$this->db->join ( 'tb_sampah s', 's.id_sampah = hk.id_sampah', 'left' );
 		$this->db->where ( 'hk.slug', $slug );
+		$this->db->where ( 'status', 'published' );
 		return $this->db->get ()->row ();
 		}
-
+	public function hitung_karya_terbaru_bulan_ini ()
+		{
+		$this->db->where ( 'MONTH(tanggal_dibuat)', date ( 'm' ) );
+		$this->db->where ( 'YEAR(tanggal_dibuat)', date ( 'Y' ) );
+		return $this->db->count_all_results ( 'tb_hasil_karya' );
+		}
 	public function increment_read_count ( $id_hasil_karya )
 		{
 		$this->db->set ( 'read_count', 'read_count+1', FALSE );
@@ -61,7 +67,7 @@ class M_Hasil_Karya extends CI_Model
 		$this->db->where ( 'hk.id_jenis_sampah', $id_jenis_sampah );
 		$this->db->where ( 'hk.id_hasil_karya !=', $exclude_id );
 		$this->db->where ( 'hk.status', 'published' );
-		$this->db->order_by ( 'hk.tanggal_dibuat', 'DESC' );
+		$this->db->order_by ( 'hk.id_hasil_karya', 'DESC' );
 		$this->db->limit ( $limit );
 		$query = $this->db->get ();
 
@@ -157,7 +163,7 @@ class M_Hasil_Karya extends CI_Model
 		$data[ 'excerpt' ] = $this->_generate_excerpt ( $data[ 'konten' ] );
 
 		// Set default values
-		$slug                       = $data[ 'judul' ] . '-' . date ( 'Y-m-d gis' );
+		$slug                     = $data[ 'judul' ] . '-' . date ( 'Y-m-d gis' );
 		$data[ 'status' ]           = 'published';
 		$data[ 'slug' ]             = url_title ( $slug, '-', true );
 		$data[ 'read_count' ]       = 0;
@@ -180,7 +186,7 @@ class M_Hasil_Karya extends CI_Model
 
 	public function update_karya ( $id, $data )
 		{
-		$slug                     = $data[ 'judul' ] . '-' . date ( 'Y-m-d gis' );
+		$slug                   = $data[ 'judul' ] . '-' . date ( 'Y-m-d gis' );
 		$data[ 'slug' ]           = url_title ( $slug, '-', true );
 		$data[ 'tanggal_dibuat' ] = date ( 'Y-m-d H:i:s' );
 		$this->db->where ( 'id_hasil_karya', $id );
@@ -195,9 +201,11 @@ class M_Hasil_Karya extends CI_Model
 
 	public function get_recent_karya ( $limit = 3 )
 		{
-		$this->db->select ( 'hk.*, u.username as author' );
+		$this->db->select ( 'hk.*, u.username as author, js.jenis_sampah as kategori_nama, s.nama_sampah as subkategori_nama' );
 		$this->db->from ( 'tb_hasil_karya hk' );
 		$this->db->join ( 'tb_users u', 'u.id_user = hk.id_user' );
+		$this->db->join ( 'tb_jenis_sampah js', 'js.id_jenis_sampah = hk.id_jenis_sampah', 'left' );
+		$this->db->join ( 'tb_sampah s', 's.id_sampah = hk.id_sampah', 'left' );
 		$this->db->order_by ( 'hk.tanggal_dibuat', 'DESC' );
 		$this->db->limit ( $limit );
 		return $this->db->get ()->result ();
@@ -212,13 +220,6 @@ class M_Hasil_Karya extends CI_Model
 		return $this->db->get ( 'tb_jenis_sampah' )->result ();
 		}
 
-	// public function get_sampah_by_jenis ( $id_jenis_sampah )
-	// 	{
-	// 		$this->db->select('tb_sampah.*, COUNT(hk.id_hasil_karya) as article_count')
-	// 	$this->db->where ( 'id_jenis_sampah', $id_jenis_sampah );
-	// 	$this->db->order_by ( 'nama_sampah', 'ASC' );
-	// 	return $this->db->get ( 'tb_sampah' )->result ();
-	// 	}
 
 	public function get_sampah_by_jenis ( $id_jenis_sampah )
 		{
@@ -230,6 +231,4 @@ class M_Hasil_Karya extends CI_Model
 		$this->db->order_by ( 's.nama_sampah', 'ASC' );
 		return $this->db->get ()->result ();
 		}
-
 	}
-?>
