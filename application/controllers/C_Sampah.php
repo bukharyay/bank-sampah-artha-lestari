@@ -125,12 +125,14 @@ class C_Sampah extends MY_Controller
 		$this->form_validation->set_error_delimiters ( '', '' );
 		if ( ! $this->form_validation->run ( 'harga_sampah' ) )
 			{
-			http_response_code ( 412 );
-			header ( 'Content-Type: application/json' );
-			echo json_encode ( [ 
-				'status' => 'error',
-				'errors' => validation_errors (),
-			] );
+				$this->output
+					->set_status_header ( 412 )
+					->set_content_type ( 'application/json' )
+					->set_output ( json_encode ( [ 
+						'status' => 'error',
+						'errors' => validation_errors (),
+					] ) );
+					return;
 			}
 		else
 			{
@@ -145,14 +147,26 @@ class C_Sampah extends MY_Controller
 			if ( $this->M_Sampah->update_harga ( $data ) )
 				{
 				$this->session->set_flashdata ( 'success', 'Harga berhasil diupdate!' );
-				header ( 'Content-Type: application/json' );
-				echo json_encode ( [ 'status' => 'success' ] );
+				// header ( 'Content-Type: application/json' );
+				// echo json_encode ( [ 'status' => 'success' ] );
+				$this->output
+				->set_content_type ( 'application/json' )
+				->set_output ( json_encode ( [ 
+					'status'   => 'success',
+					'message'  => 'Harga berhasil ditambahkan!',
+					'redirect' => site_url ( 'Manage-Sampah' ),
+				] ) );
 				}
 			else
 				{
 				$this->session->set_flashdata ( 'error', 'Gagal update harga!' );
-				header ( 'Content-Type: application/json' );
-				echo json_encode ( [ 'status' => 'error', 'message' => 'Gagal update harga!' ] );
+				$this->output
+				->set_content_type ( 'application/json' )
+				->set_output ( json_encode ( [ 
+					'status'   => 'error',
+					'message'  => 'Gagal update harga!',
+					'redirect' => site_url ( 'Manage-Sampah' ),
+				] ) );
 				}
 			}
 		}
@@ -160,7 +174,9 @@ class C_Sampah extends MY_Controller
 	public function get_last_harga ( $id_sampah )
 		{
 		$last_harga = $this->M_Sampah->get_last_harga ( $id_sampah );
-		echo json_encode ( $last_harga );
+		$this->output
+			->set_content_type ( 'application/json' )
+			->set_output ( json_encode ( $last_harga ) );
 		}
 
 	public function delete_harga ( $id_sampah )
@@ -176,14 +192,24 @@ class C_Sampah extends MY_Controller
 		if ( $this->M_Sampah->rollback_latest_harga ( $id_sampah_post ) )
 			{
 			$this->session->set_flashdata ( 'success', 'Harga berhasil dirollback!' );
-			header ( 'Content-Type: application/json' );
-			echo json_encode ( [ 'status' => "success" ] );
+			$this->output
+			->set_content_type ( 'application/json' )
+			->set_output ( json_encode ( [ 
+				'status'   => 'success',
+				'message'  => 'Harga berhasil dirollback!',
+				'redirect' => site_url ( 'Manage-Sampah' ),
+			] ) );
 			}
 		else
 			{
 			$this->session->set_flashdata ( 'error', 'Gagal rollback harga!' );
-			header ( 'Content-Type: application/json' );
-			echo json_encode ( [ 'status' => 'error', 'message' => 'Tidak ada cukup data untuk rollback.' ] );
+			$this->output
+			->set_content_type ( 'application/json' )
+			->set_output ( json_encode ( [ 
+				'status'   => 'error',
+				'message'  => 'Tidak ada cukup data untuk rollback.',
+				'redirect' => site_url ( 'Manage-Sampah' ),
+			] ) );
 			}
 
 		}

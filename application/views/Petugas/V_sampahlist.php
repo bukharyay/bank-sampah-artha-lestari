@@ -10,13 +10,13 @@
             <div class="table-responsive">
               <?php $this->load->view ( 'components/alert_messages' ); ?>
               <?php if ( validation_errors () ) : ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  <strong>Oops!</strong> Ada beberapa kesalahan dalam pengisian form:
-                  <ul>
-                    <?= validation_errors ( '<li>', '</li>' ); ?>
-                  </ul>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Oops!</strong> Ada beberapa kesalahan dalam pengisian form:
+                <ul>
+                  <?= validation_errors ( '<li>', '</li>' ); ?>
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
               <?php endif; ?>
 
               <table id="harga_sampah_list" class="table table-striped table-bordered">
@@ -32,35 +32,35 @@
                 </thead>
                 <tbody>
                   <?php if ( is_array ( $data_harga_sampah ) || is_object ( $data_harga_sampah ) ) : ?>
-                    <?php foreach ( $data_harga_sampah as $index => $dhs ) : ?>
-                      <tr>
-                        <td><?= $index + 1 ?></td>
-                        <td><?= htmlspecialchars ( $dhs->jenis_sampah ) ?></td>
-                        <td><?= htmlspecialchars ( $dhs->nama_sampah ) ?></td>
-                        <td>Rp. <?= htmlspecialchars ( number_format ( $dhs->harga_per_kg, 2, ',', '.' ) ) ?>/kg</td>
-                        <td>
-                          <div class="text-muted  ">
-                            <i class="mdi mdi-calendar align-middle me-2"></i>
-                            <?= date ( 'd F Y', strtotime ( $dhs->periode ) ) ?>
-                          </div>
-                        </td>
-                        <td class="text-center">
-                          <!-- <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                  <?php foreach ( $data_harga_sampah as $index => $dhs ) : ?>
+                  <tr>
+                    <td><?= $index + 1 ?></td>
+                    <td><?= htmlspecialchars ( $dhs->jenis_sampah ) ?></td>
+                    <td><?= htmlspecialchars ( $dhs->nama_sampah ) ?></td>
+                    <td>Rp. <?= htmlspecialchars ( number_format ( $dhs->harga_per_kg, 2, ',', '.' ) ) ?>/kg</td>
+                    <td>
+                      <div class="text-muted  ">
+                        <i class="mdi mdi-calendar align-middle me-2"></i>
+                        <?= date ( 'd F Y', strtotime ( $dhs->periode ) ) ?>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <!-- <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
                               data-bs-target="#hargaUpdate<?= $dhs->id_harga ?>">
                         <i class="mdi mdi-pencil text-info align-middle"></i> Update Harga
                       </button> -->
-                          <button type="button" class="btn btn-outline-info btn-sm btn-update-harga"
-                                  style="width: 3rem; height: 3rem; border-radius: 3rem;" data-toggle="tooltip"
-                                  title="Update Harga" data-id-sampah="<?= $dhs->id_sampah ?>"
-                                  data-nama-sampah="<?= htmlspecialchars ( $dhs->nama_sampah ) ?>"
-                                  data-harga-per-kg="<?= htmlspecialchars ( $dhs->harga_per_kg ) ?>"
-                                  data-periode="<?= htmlspecialchars ( $dhs->periode ) ?>"
-                                  data-action="<?= base_url ( 'Edit-Harga-Sampah/' . $dhs->id_sampah ) ?>">
-                            <i class="mdi  mdi-sync  align-middle"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
+                      <button type="button" class="btn btn-outline-info btn-sm btn-update-harga"
+                              style="width: 3rem; height: 3rem; border-radius: 3rem;" data-toggle="tooltip"
+                              title="Update Harga" data-id-sampah="<?= $dhs->id_sampah ?>"
+                              data-nama-sampah="<?= htmlspecialchars ( $dhs->nama_sampah ) ?>"
+                              data-harga-per-kg="<?= htmlspecialchars ( $dhs->harga_per_kg ) ?>"
+                              data-periode="<?= htmlspecialchars ( $dhs->periode ) ?>"
+                              data-action="<?= base_url ( 'Edit-Harga-Sampah/' . $dhs->id_sampah ) ?>">
+                        <i class="mdi  mdi-sync  align-middle"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <?php endforeach; ?>
                   <?php endif; ?>
                 </tbody>
               </table>
@@ -139,39 +139,39 @@
                 </thead>
                 <tbody>
                   <?php if ( is_array ( $data_sampah ) || is_object ( $data_sampah ) ) : ?>
-                    <?php foreach ( $data_sampah as $index => $ds ) : ?>
-                      <tr>
-                        <td><?= $index + 1 ?></td>
-                        <td><?= htmlspecialchars ( $ds->jenis_sampah ) ?></td>
-                        <td><?= htmlspecialchars ( $ds->nama_sampah ) ?></td>
-                        <td class="text-center">
-                          <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-warning btn-sm btn-update-sampah"
-                                    data-toggle="tooltip" title="Edit" data-id-sampah="<?= $ds->id_sampah ?>"
-                                    data-nama-sampah="<?= htmlspecialchars ( $ds->nama_sampah ) ?>"
-                                    data-id-jenis-sampah="<?= $ds->id_jenis_sampah ?>"
-                                    data-action=" <?= base_url ( 'Edit-Sampah/' . $ds->id_sampah ) ?>">
-                              <i class="mdi mdi-pencil  align-middle"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-danger btn-sm btn-delete-sampah"
-                                    data-toggle="tooltip" title="Hapus" data-id-sampah="<?= $ds->id_sampah ?>"
-                                    data-nama-sampah="<?= htmlspecialchars ( $ds->nama_sampah ) ?>"
-                                    data-action=" <?= base_url ( 'Delete-Sampah/' . $ds->id_sampah ) ?>">
-                              <i class="mdi mdi-delete  align-middle"></i>
-                            </button>
-                          </div>
+                  <?php foreach ( $data_sampah as $index => $ds ) : ?>
+                  <tr>
+                    <td><?= $index + 1 ?></td>
+                    <td><?= htmlspecialchars ( $ds->jenis_sampah ) ?></td>
+                    <td><?= htmlspecialchars ( $ds->nama_sampah ) ?></td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-warning btn-sm btn-update-sampah"
+                                data-toggle="tooltip" title="Edit" data-id-sampah="<?= $ds->id_sampah ?>"
+                                data-nama-sampah="<?= htmlspecialchars ( $ds->nama_sampah ) ?>"
+                                data-id-jenis-sampah="<?= $ds->id_jenis_sampah ?>"
+                                data-action=" <?= base_url ( 'Edit-Sampah/' . $ds->id_sampah ) ?>">
+                          <i class="mdi mdi-pencil  align-middle"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm btn-delete-sampah"
+                                data-toggle="tooltip" title="Hapus" data-id-sampah="<?= $ds->id_sampah ?>"
+                                data-nama-sampah="<?= htmlspecialchars ( $ds->nama_sampah ) ?>"
+                                data-action=" <?= base_url ( 'Delete-Sampah/' . $ds->id_sampah ) ?>">
+                          <i class="mdi mdi-delete  align-middle"></i>
+                        </button>
+                      </div>
 
-                          <!-- <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                      <!-- <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
                               data-bs-target="#sampahEdit<?= $ds->id_sampah ?>">
                         <i class="mdi mdi-pencil text-warning align-middle"></i> Edit
                       </button> -->
-                          <!-- <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
+                      <!-- <button type="button" class="btn btn-light btn-sm" data-bs-toggle="modal"
                               data-bs-target="#sampahHapus<?= $ds->id_sampah ?>">
                         <i class="mdi mdi-delete text-danger align-middle"></i> Hapus
                       </button> -->
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
+                    </td>
+                  </tr>
+                  <?php endforeach; ?>
                   <?php endif; ?>
                 </tbody>
               </table>
@@ -202,9 +202,9 @@
                 <select class="form-control form-select" id="id_jenis_sampah_edit" name="id_jenis_sampah" required>
                   <option value="">- Pilih -</option>
                   <?php if ( is_array ( $data_jenis_sampah ) || is_object ( $data_jenis_sampah ) ) : ?>
-                    <?php foreach ( $data_jenis_sampah as $djs ) : ?>
-                      <option value="<?= $djs->id_jenis_sampah ?>"><?= $djs->jenis_sampah ?></option>
-                    <?php endforeach; ?>
+                  <?php foreach ( $data_jenis_sampah as $djs ) : ?>
+                  <option value="<?= $djs->id_jenis_sampah ?>"><?= $djs->jenis_sampah ?></option>
+                  <?php endforeach; ?>
                   <?php endif; ?>
                 </select>
               </div>
@@ -263,74 +263,74 @@
   ?>
 
   <script type="text/javascript">
-    $(document).on('click', '.btn-update-harga', function () {
-      const idSampah = $(this).data('id-sampah');
-      const namaSampah = $(this).data('nama-sampah');
-      const hargaPerKg = $(this).data('harga-per-kg');
-      const periode = $(this).data('periode');
-      const actionUrl = $(this).data('action');
+  $(document).on('click', '.btn-update-harga', function() {
+    const idSampah = $(this).data('id-sampah');
+    const namaSampah = $(this).data('nama-sampah');
+    const hargaPerKg = $(this).data('harga-per-kg');
+    const periode = $(this).data('periode');
+    const actionUrl = $(this).data('action');
 
-      // Populate the modal fields
-      $('#id_sampah').val(idSampah);
-      $('#nama_sampah_val').val(namaSampah);
-      $('#harga_per_kg').val(hargaPerKg);
-      $('#periode').val(periode);
+    // Populate the modal fields
+    $('#id_sampah').val(idSampah);
+    $('#nama_sampah_val').val(namaSampah);
+    $('#harga_per_kg').val(hargaPerKg);
+    $('#periode').val(periode);
 
-      $('#nama_sampah').text(namaSampah);
+    $('#nama_sampah').text(namaSampah);
 
-      // Set the form action
-      $('#formUpdateHarga').attr('action', actionUrl);
+    // Set the form action
+    $('#formUpdateHarga').attr('action', actionUrl);
 
-      // Show the modal
-      $('#hargaUpdateModal').modal('show');
-    });
+    // Show the modal
+    $('#hargaUpdateModal').modal('show');
+  });
 
-    $(document).on('click', '.btn-update-sampah', function () {
-      const idSampah = $(this).data('id-sampah');
-      const namaSampah = $(this).data('nama-sampah');
-      const idJenisSampah = $(this).data('id-jenis-sampah');
-      const actionUrl = $(this).data('action');
+  $(document).on('click', '.btn-update-sampah', function() {
+    const idSampah = $(this).data('id-sampah');
+    const namaSampah = $(this).data('nama-sampah');
+    const idJenisSampah = $(this).data('id-jenis-sampah');
+    const actionUrl = $(this).data('action');
 
-      // Set the form action
-      $('#formEditSampah').attr('action', actionUrl);
+    // Set the form action
+    $('#formEditSampah').attr('action', actionUrl);
 
-      // Populate the modal fields with unique IDs
-      $('#id_sampah_edit').val(idSampah);
-      $('#nama_sampah_edit').val(namaSampah);
-      $('#id_jenis_sampah_edit').val(idJenisSampah);
+    // Populate the modal fields with unique IDs
+    $('#id_sampah_edit').val(idSampah);
+    $('#nama_sampah_edit').val(namaSampah);
+    $('#id_jenis_sampah_edit').val(idJenisSampah);
 
 
-      // Show the modal
-      $('#sampahEditModal').modal('show');
-    });
+    // Show the modal
+    $('#sampahEditModal').modal('show');
+  });
 
-    $(document).on('click', '.btn-delete-sampah', function () {
-      const idSampah = $(this).data('id-sampah');
-      const namaSampah = $(this).data('nama-sampah');
-      const actionUrl = $(this).data('action');
+  $(document).on('click', '.btn-delete-sampah', function() {
+    const idSampah = $(this).data('id-sampah');
+    const namaSampah = $(this).data('nama-sampah');
+    const actionUrl = $(this).data('action');
 
-      // Set the form action
-      $('#formHapusSampah').attr('action', actionUrl);
+    // Set the form action
+    $('#formHapusSampah').attr('action', actionUrl);
 
-      // Populate the modal fields
-      $('#id_sampah_hapus').val(idSampah);
-      $('#nama_sampah_hapus').text(namaSampah);
+    // Populate the modal fields
+    $('#id_sampah_hapus').val(idSampah);
+    $('#nama_sampah_hapus').text(namaSampah);
 
-      // Show the modal
-      $('#sampahHapusModal').modal('show');
-    });
+    // Show the modal
+    $('#sampahHapusModal').modal('show');
+  });
 
-    function confirmRollback(id_sampah) {
-      $.ajax({
-        type: "GET",
-        url: '<?= base_url ( 'Get-Last-Harga-Sampah/' ) ?>' + id_sampah,
-        success: function (data) {
-          const response = JSON.parse(data);
-          if (response.error) {
-            Swal.fire("Error", response.error + "<br>Mungkin sudah lebih dari 1 minggu", "error");
-          } else {
-            const lastData = response;
-            const message = `
+  function confirmRollback(id_sampah) {
+    $.ajax({
+      type: "GET",
+      url: '<?= base_url ( 'Get-Last-Harga-Sampah/' ) ?>' + id_sampah,
+      success: function(data) {
+        const response = data;
+        if (response.error) {
+          Swal.fire("Error", response.error + "<br>Mungkin sudah lebih dari 1 minggu", "error");
+        } else {
+          const lastData = response;
+          const message = `
           <div style="font-family: Arial, sans-serif; line-height: 1.5;">
             <strong>Data terakhir yang akan dirollback:</strong><br>
             <span style="font-weight: bold;">Sampah:</span> <span style="color: #d33;">${lastData.nama_sampah}</span><br>
@@ -339,194 +339,194 @@
           </div>
         `;
 
-            Swal.fire({
-              title: 'Konfirmasi',
-              html: message +
-                "<br><small>Apakah yakin ingin melakukan rollback untuk sampah ini? <br> Semua transaksi yang menggunakan harga saat ini akan ikut terhapus!</small>",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#d33',
-              cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Ya, rollback!',
-              cancelButtonText: 'Batal'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                $.ajax({
-                  type: "POST",
-                  url: '<?= base_url ( 'Rollback-Harga-Sampah/' ) ?>' + id_sampah,
-                  data: {
-                    'id_sampah': id_sampah,
-                  },
-                  dataType: "json",
-                  success: function (response) {
-                    if (response.status == 'success') {
-                      $('#hargaUpdateModal').modal('hide');
-                      Swal.fire({
-                        title: "Deleted!",
-                        text: "Data berhasil dirollback.",
-                        icon: "success"
-                      }).then(() => {
-                        location.reload();
-                      });
-                    } else {
-                      Swal.fire({
-                        title: "Error",
-                        text: response.message || "Terjadi kesalahan saat memperbarui harga.",
-                        icon: "error"
-                      });
-                    }
-                  },
-                  error: function (xhr) {
-                    Swal.fire("Cancelled", "Data gagal dirollback.", "error");
-                  }
-                });
-              }
-            });
-          }
-        },
-        error: function () {
-          Swal.fire("Error", "Gagal mengambil data terakhir.", "error");
-        }
-      });
-    }
-
-    $('#formUpdateHarga').on('submit', function (e) {
-      e.preventDefault();
-      const formData = $(this).serialize();
-      const namaSampah = $('#nama_sampah_val').val();
-
-      $.ajax({
-        type: "POST",
-        url: '<?= base_url ( 'Edit-Harga-Sampah/' ) ?>' + $('#id_sampah').val(),
-        data: formData,
-        dataType: "json",
-        success: function (response) {
-          $('#hargaUpdateModal').modal('hide');
           Swal.fire({
-            title: "Success!",
-            text: "Harga " + namaSampah + " berhasil diperbarui",
-            icon: "success"
-          }).then(() => {
-            location.reload();
-          });
-        },
-        error: function (data) {
-          let responseData = data.responseJSON;
-          Swal.fire("Error", "<small>" + responseData.errors + "</small>", "error");
-        }
-      });
-    });
-
-    $(document).ready(function () {
-      // Initialize DataTable with Bootstrap 4 styling
-
-      $('#harga_sampah_list').DataTable({
-        layout: {
-          top2Start: {
-            info: {},
-
-          },
-          top1Start: {
-            buttons: [
-              'copy', 'excel', 'pdf', 'print', 'colvis'
-            ],
-          },
-          topEnd: {
-            search: {
-              placeholder: 'Cari:'
-            },
-          },
-          bottomStart: 'info',
-          bottomEnd: 'paging'
-        },
-        language: {
-          lengthMenu: "Tampilkan _MENU_ data",
-          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-          infoEmpty: "Tidak ada data yang ditampilkan",
-          infoFiltered: "(difilter dari _MAX_ total data)",
-          zeroRecords: "Tidak ada data yang cocok",
-          paginate: {
-            first: "Pertama",
-            last: "Terakhir",
-            next: "Selanjutnya",
-            previous: "Sebelumnya"
-          }
-        }
-      });
-
-      const sampahTable = $('#sampah_list').DataTable({
-        layout: {
-          top: {
-            buttons: [
-              'copy', 'excel', 'pdf', 'print', 'colvis'
-            ],
-          },
-          topStart: ['pageLength'],
-          topEnd: {
-            search: {
-              placeholder: 'Cari:'
-            },
-          },
-          bottomStart: 'info',
-          bottomEnd: 'paging'
-        },
-        language: {
-          lengthMenu: "Tampilkan _MENU_ data",
-          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-          infoEmpty: "Tidak ada data yang ditampilkan",
-          infoFiltered: "(difilter dari _MAX_ total data)",
-          zeroRecords: "Tidak ada data yang cocok",
-          paginate: {
-            first: "Pertama",
-            last: "Terakhir",
-            next: "Selanjutnya",
-            previous: "Sebelumnya"
-          }
-        }
-      });
-
-      // Form validation
-      $('#addSampah').on('submit', function (e) {
-        const form = $(this);
-        const sampahInput = form.find('[name="nama_sampah"]');
-        const jenisInput = form.find('[name="id_jenis_sampah"]');
-
-        if (!sampahInput.val().trim() || !jenisInput.val()) {
-          e.preventDefault();
-          Swal.fire({
-            icon: 'error',
-            title: 'Validasi Error',
-            text: 'Semua field harus diisi!'
-          });
-          return false;
-        }
-
-        // Confirm submission
-        if (form.data('confirm') === 'delete') {
-          e.preventDefault();
-          Swal.fire({
-            title: 'Konfirmasi Hapus',
-            text: "Data yang dihapus tidak dapat dikembalikan!",
+            title: 'Konfirmasi',
+            html: message +
+              "<br><small>Apakah yakin ingin melakukan rollback untuk sampah ini? <br> Semua transaksi yang menggunakan harga saat ini akan ikut terhapus!</small>",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus!',
+            confirmButtonText: 'Ya, rollback!',
             cancelButtonText: 'Batal'
           }).then((result) => {
             if (result.isConfirmed) {
-              form.off('submit').submit();
+              $.ajax({
+                type: "POST",
+                url: '<?= base_url ( 'Rollback-Harga-Sampah/' ) ?>' + id_sampah,
+                data: {
+                  'id_sampah': id_sampah,
+                },
+                dataType: "json",
+                success: function(response) {
+                  if (response.status == 'success') {
+                    $('#hargaUpdateModal').modal('hide');
+                    Swal.fire({
+                      title: "Deleted!",
+                      text: "Data berhasil dirollback.",
+                      icon: "success"
+                    }).then(() => {
+                      location.reload();
+                    });
+                  } else {
+                    Swal.fire({
+                      title: "Error",
+                      text: response.message || "Terjadi kesalahan saat memperbarui harga.",
+                      icon: "error"
+                    });
+                  }
+                },
+                error: function(xhr) {
+                  Swal.fire("Cancelled", "Data gagal dirollback.", "error");
+                }
+              });
             }
           });
         }
-      });
-      // Initialize tooltips
-      $('[data-toggle="tooltip"]').tooltip({
-        boundary: 'window'
-      });
-
-      // Auto-hide alerts
-      $('.alert').delay(5000).fadeOut(500);
-
+      },
+      error: function() {
+        Swal.fire("Error", "Gagal mengambil data terakhir.", "error");
+      }
     });
+  }
+
+  $('#formUpdateHarga').on('submit', function(e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    const namaSampah = $('#nama_sampah_val').val();
+
+    $.ajax({
+      type: "POST",
+      url: '<?= base_url ( 'Edit-Harga-Sampah/' ) ?>' + $('#id_sampah').val(),
+      data: formData,
+      dataType: "json",
+      success: function(response) {
+        $('#hargaUpdateModal').modal('hide');
+        Swal.fire({
+          title: "Success!",
+          text: "Harga " + namaSampah + " berhasil diperbarui",
+          icon: "success"
+        }).then(() => {
+          location.reload();
+        });
+      },
+      error: function(data) {
+        let responseData = data.responseJSON;
+        Swal.fire("Error", "<small>" + responseData.errors + "</small>", "error");
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    // Initialize DataTable with Bootstrap 4 styling
+
+    $('#harga_sampah_list').DataTable({
+      layout: {
+        top2Start: {
+          info: {},
+
+        },
+        top1Start: {
+          buttons: [
+            'copy', 'excel', 'pdf', 'print', 'colvis'
+          ],
+        },
+        topEnd: {
+          search: {
+            placeholder: 'Cari:'
+          },
+        },
+        bottomStart: 'info',
+        bottomEnd: 'paging'
+      },
+      language: {
+        lengthMenu: "Tampilkan _MENU_ data",
+        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+        infoEmpty: "Tidak ada data yang ditampilkan",
+        infoFiltered: "(difilter dari _MAX_ total data)",
+        zeroRecords: "Tidak ada data yang cocok",
+        paginate: {
+          first: "Pertama",
+          last: "Terakhir",
+          next: "Selanjutnya",
+          previous: "Sebelumnya"
+        }
+      }
+    });
+
+    const sampahTable = $('#sampah_list').DataTable({
+      layout: {
+        top: {
+          buttons: [
+            'copy', 'excel', 'pdf', 'print', 'colvis'
+          ],
+        },
+        topStart: ['pageLength'],
+        topEnd: {
+          search: {
+            placeholder: 'Cari:'
+          },
+        },
+        bottomStart: 'info',
+        bottomEnd: 'paging'
+      },
+      language: {
+        lengthMenu: "Tampilkan _MENU_ data",
+        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+        infoEmpty: "Tidak ada data yang ditampilkan",
+        infoFiltered: "(difilter dari _MAX_ total data)",
+        zeroRecords: "Tidak ada data yang cocok",
+        paginate: {
+          first: "Pertama",
+          last: "Terakhir",
+          next: "Selanjutnya",
+          previous: "Sebelumnya"
+        }
+      }
+    });
+
+    // Form validation
+    $('#addSampah').on('submit', function(e) {
+      const form = $(this);
+      const sampahInput = form.find('[name="nama_sampah"]');
+      const jenisInput = form.find('[name="id_jenis_sampah"]');
+
+      if (!sampahInput.val().trim() || !jenisInput.val()) {
+        e.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'Validasi Error',
+          text: 'Semua field harus diisi!'
+        });
+        return false;
+      }
+
+      // Confirm submission
+      if (form.data('confirm') === 'delete') {
+        e.preventDefault();
+        Swal.fire({
+          title: 'Konfirmasi Hapus',
+          text: "Data yang dihapus tidak dapat dikembalikan!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, Hapus!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.off('submit').submit();
+          }
+        });
+      }
+    });
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip({
+      boundary: 'window'
+    });
+
+    // Auto-hide alerts
+    $('.alert').delay(5000).fadeOut(500);
+
+  });
   </script>

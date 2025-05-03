@@ -93,6 +93,7 @@ class C_Transaksi extends MY_Controller
 
 	public function add_transaksi ()
 		{
+		$this->form_validation->set_error_delimiters ( '', '' );
 		if ( ! $this->_validate_transaksi () )
 			{
 			$this->output
@@ -100,7 +101,7 @@ class C_Transaksi extends MY_Controller
 				->set_content_type ( 'application/json' )
 				->set_output ( json_encode ( [ 
 					'status' => 'error',
-					'errors' => validation_errors_array (),
+					'errors' => validation_errors (),
 				] ) );
 			return;
 			}
