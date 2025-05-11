@@ -89,7 +89,7 @@ class M_Transaksi extends CI_Model
 			->result ();
 		}
 
-	public function checkout ( $kode_transaksi ) : mixed
+	public function checkout ( $kode_transaksi ) 
 		{
 		$selected_field = [ 
 			"ts.id_transaksi",
@@ -124,7 +124,7 @@ class M_Transaksi extends CI_Model
 			->order_by ( "ts.tanggal_transaksi", "DESC" )
 			->get ()->row_object ();
 		}
-	public function checkout_process ( $kode_transaksi, $data ) : mixed
+	public function checkout_process ( $kode_transaksi, $data ) 
 		{
 		try
 			{

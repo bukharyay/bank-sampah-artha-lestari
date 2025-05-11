@@ -8,7 +8,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class C_Sampah extends MY_Controller
 	{
 	protected $allowed_roles = [ 'admin', 'petugas' ];
-	public $user_session = [];
+	public    $user_session  = [];
 
 	public function __construct ()
 		{
@@ -86,6 +86,16 @@ class C_Sampah extends MY_Controller
 			->set_output ( json_encode ( $sampah ) );
 
 		}
+	public function search_harga_sampah ( $id_sampah )
+		{
+		$search_term = $this->input->get ( 'search' ) ?? '';
+
+		$sampah = $this->M_Sampah->search_harga_sampah_by_id ( $id_sampah );
+		$this->output
+			->set_content_type ( 'application/json' )
+			->set_output ( json_encode ( $sampah ) );
+
+		}
 
 	public function index ()
 		{
@@ -125,14 +135,14 @@ class C_Sampah extends MY_Controller
 		$this->form_validation->set_error_delimiters ( '', '' );
 		if ( ! $this->form_validation->run ( 'harga_sampah' ) )
 			{
-				$this->output
-					->set_status_header ( 412 )
-					->set_content_type ( 'application/json' )
-					->set_output ( json_encode ( [ 
-						'status' => 'error',
-						'errors' => validation_errors (),
-					] ) );
-					return;
+			$this->output
+				->set_status_header ( 412 )
+				->set_content_type ( 'application/json' )
+				->set_output ( json_encode ( [ 
+					'status' => 'error',
+					'errors' => validation_errors (),
+				] ) );
+			return;
 			}
 		else
 			{
@@ -150,23 +160,23 @@ class C_Sampah extends MY_Controller
 				// header ( 'Content-Type: application/json' );
 				// echo json_encode ( [ 'status' => 'success' ] );
 				$this->output
-				->set_content_type ( 'application/json' )
-				->set_output ( json_encode ( [ 
-					'status'   => 'success',
-					'message'  => 'Harga berhasil ditambahkan!',
-					'redirect' => site_url ( 'Manage-Sampah' ),
-				] ) );
+					->set_content_type ( 'application/json' )
+					->set_output ( json_encode ( [ 
+						'status'   => 'success',
+						'message'  => 'Harga berhasil ditambahkan!',
+						'redirect' => site_url ( 'Manage-Sampah' ),
+					] ) );
 				}
 			else
 				{
 				$this->session->set_flashdata ( 'error', 'Gagal update harga!' );
 				$this->output
-				->set_content_type ( 'application/json' )
-				->set_output ( json_encode ( [ 
-					'status'   => 'error',
-					'message'  => 'Gagal update harga!',
-					'redirect' => site_url ( 'Manage-Sampah' ),
-				] ) );
+					->set_content_type ( 'application/json' )
+					->set_output ( json_encode ( [ 
+						'status'   => 'error',
+						'message'  => 'Gagal update harga!',
+						'redirect' => site_url ( 'Manage-Sampah' ),
+					] ) );
 				}
 			}
 		}
@@ -193,23 +203,23 @@ class C_Sampah extends MY_Controller
 			{
 			$this->session->set_flashdata ( 'success', 'Harga berhasil dirollback!' );
 			$this->output
-			->set_content_type ( 'application/json' )
-			->set_output ( json_encode ( [ 
-				'status'   => 'success',
-				'message'  => 'Harga berhasil dirollback!',
-				'redirect' => site_url ( 'Manage-Sampah' ),
-			] ) );
+				->set_content_type ( 'application/json' )
+				->set_output ( json_encode ( [ 
+					'status'   => 'success',
+					'message'  => 'Harga berhasil dirollback!',
+					'redirect' => site_url ( 'Manage-Sampah' ),
+				] ) );
 			}
 		else
 			{
 			$this->session->set_flashdata ( 'error', 'Gagal rollback harga!' );
 			$this->output
-			->set_content_type ( 'application/json' )
-			->set_output ( json_encode ( [ 
-				'status'   => 'error',
-				'message'  => 'Tidak ada cukup data untuk rollback.',
-				'redirect' => site_url ( 'Manage-Sampah' ),
-			] ) );
+				->set_content_type ( 'application/json' )
+				->set_output ( json_encode ( [ 
+					'status'   => 'error',
+					'message'  => 'Tidak ada cukup data untuk rollback.',
+					'redirect' => site_url ( 'Manage-Sampah' ),
+				] ) );
 			}
 
 		}

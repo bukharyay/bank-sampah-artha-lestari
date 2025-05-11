@@ -1,123 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title><?= $title; ?></title>
+		<style>
+			@media print {
+				body {
+					font-family: Arial, sans-serif;
+					font-size: 12px;
+					width: 80mm;
+					margin: 0;
+					padding: 5px;
+					-webkit-print-color-adjust: exact;
+				}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= base_url () ?>assets/css/style.css">
+				.no-print {
+					display: none !important;
+				}
 
+				table {
+					width: 100%;
+					border-collapse: collapse;
+				}
 
-    <title><?= $title; ?></title>
-    <style>
-      @media print {
-        body {
-          /* width: 21cm;
-        height: 29.7cm;
-        margin: 30mm 45mm 30mm 45mm; */
-          -webkit-print-color-adjust: exact;
-          /* Preserve colors */
-        }
-      }
+				.text-center {
+					text-align: center;
+				}
 
+				.text-right {
+					text-align: right;
+				}
 
-      .total {
-        font-weight: bold;
-        font-size: 1.25rem;
-      }
-    </style>
-  </head>
+				hr {
+					border-top: 1px dashed #000;
+					margin: 5px 0;
+				}
 
-  <body>
+				.bordered {
+					border: 1px solid #000;
+					padding: 3px;
+				}
+			}
 
-    <div class="container-fluid">
-      <div class="content-wrapper">
-        <div class="row mb-3">
-          <div class="col-12">
-            <div class="card px-2">
-              <div class="card-body">
-                <div class=" d-flex flex-nowrap  align-items-center">
-                  <div class="text-start">
-                    <img class="img-fluid w-50" src="<?= base_url ( 'assets/images/logo.webp' ); ?>" alt="Logo">
-                  </div>
-                  <div class="text-end ms-auto w-100">
-                    <h3 class="mb-2 mt-3"><b>Invoice</b></h3>
-                    <table class="ms-auto ">
-                      <tr>
-                        <td><b>Invoice No</b></td>
-                        <td><b> : </b></td>
-                        <td class="text-end"><b>#<?= $kode_transaksi; ?></b></td>
-                      </tr>
-                      <tr>
-                        <td>Invoice Date</td>
-                        <td> : </td>
-                        <td class="text-end"><?= date ( 'd-m-Y', strtotime ( $tanggal_transaksi ) ); ?></td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-                <hr>
-                <div class="invoice-details d-flex justify-content-between">
-                  <div class="text-start">
-                    <p class="mt-3 mb-2"><b>Bank Sampah Artha Lestari</b></p>
-                    <p>Jl. Meranti Tim. Dalam IV No.4,<br> Padangsari, Kec. Banyumanik,<br> Kota Semarang, Jawa Tengah
-                      50263.</p>
-                  </div>
-                  <div class="text-end">
-                    <!-- Optional: Add recipient details here -->
-                  </div>
-                </div>
-                <div class="table-responsive mt-3">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Sampah</th>
-                        <th class="text-end">Berat</th>
-                        <th class="text-end">Harga <small>(/kg)</small></th>
-                        <th class="text-end">Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="text-left"><?= $nama_sampah; ?></td>
-                        <td class="text-end"><?= number_format ( $berat / 1000, 2, ',', '.' ) . '/kg'; ?></td>
-                        <td class="text-end">Rp. <?= number_format ( $harga_per_kg, 0, ',', '.' ); ?></td>
-                        <td class="text-end">Rp. <?= $total ?></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="text-start mt-5">
-                  <hr>
-                  <table class="w-50">
-                    <tr>
-                      <td>Sub Total</td>
-                      <td>:</td>
-                      <td>1 x Rp. <?= $total ?></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h4 class="total">Total</h4>
-                      </td>
-                      <td>
-                        <h4 class="total">:</h4>
-                      </td>
-                      <td>
-                        <h4 class="total">Rp. <?= $total ?></h4>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+			@page {
+				size: auto;
+				margin: 0;
+			}
+		</style>
+	</head>
 
-    <script>
-      window.print();
-    </script>
-  </body>
+	<body>
+		<div class="text-center">
+			<div class="d-flex">
+				<div>
+					<img width="30px" src="<?= base_url ( 'assets/images/logo.webp' ); ?>" alt="">
+				</div>
+				<div>
+					<h3 style="margin: 0; font-size: 14px;">BANK SAMPAH ARTHA LESTARI</h3>
+					<p style="margin: 0; font-size: 10px;">Jl. Meranti Tim. Dalam IV No.4, Padangsari, Banyumanik</p>
+					<p style="margin: 0; font-size: 10px;">Semarang, Jawa Tengah 50263</p>
+				</div>
+			</div>
+
+			<hr>
+
+			<table>
+				<tr>
+					<td style="width: 40%;">No. Transaksi</td>
+					<td>: <?= $kode_transaksi; ?></td>
+				</tr>
+				<tr>
+					<td>Tanggal</td>
+					<td>: <?= date ( 'd-m-Y H:i', strtotime ( $tanggal_transaksi ) ); ?></td>
+				</tr>
+			</table>
+
+			<hr>
+
+			<table>
+				<thead>
+					<tr>
+						<th class="bordered" style="width: 50%;">Item</th>
+						<th class="bordered text-right">Berat</th>
+						<th class="bordered text-right">Harga</th>
+						<th class="bordered text-right">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="bordered"><?= $nama_sampah; ?></td>
+						<td class="bordered text-right"><?= number_format ( (float) $berat / 1000, 2, ',', '.' ); ?> kg</td>
+						<td class="bordered text-right">Rp <?= number_format ( (float) $harga_per_kg, 0, ',', '.' ); ?></td>
+						<td class="bordered text-right">Rp <?= number_format ( (float) $total, 0, ',', '.' ); ?></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<hr>
+
+			<table style="margin-top: 10px;">
+				<tr>
+					<td style="width: 60%;">SUB TOTAL</td>
+					<td class="text-right">Rp <?= number_format ( (float) $total, 0, ',', '.' ); ?></td>
+				</tr>
+				<tr>
+					<td><strong>TOTAL</strong></td>
+					<td class="text-right"><strong>Rp <?= number_format ( (float) $total, 0, ',', '.' ); ?></strong></td>
+				</tr>
+			</table>
+
+			<hr>
+
+			<p style="font-size: 10px; margin-top: 15px;" class="text-center">
+				Terima kasih telah bertransaksi<br>
+				di Bank Sampah Artha Lestari
+			</p>
+
+			<p style="font-size: 8px; margin-top: 10px;" class="text-center">
+				* Simpan struk ini sebagai bukti transaksi *
+			</p>
+		</div>
+
+		<script>
+			window.print();
+			window.onafterprint = function () {
+				window.close();
+			};
+		</script>
+	</body>
 
 </html>

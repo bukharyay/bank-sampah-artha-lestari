@@ -74,14 +74,15 @@ $route[ 'Edit-Harga-Sampah/(:num)' ]     = 'C_Sampah/update_harga/$1';
 $route[ 'Rollback-Harga-Sampah/(:num)' ] = 'C_Sampah/delete_harga/$1';
 
 // Petugas - Management Transaksi Sampah
-$route[ 'Manage-Transaksi' ]          = 'C_Transaksi';
-$route[ 'Search-Sampah' ]             = 'C_Sampah/search_pilih_sampah';
-$route[ 'Search-Nasabah' ]            = 'C_Transaksi/search_pilih_nasabah';
-$route[ 'Add-Transaksi' ]             = 'C_Transaksi/add_transaksi';
-$route[ 'Checkout-Transaksi/(:any)' ] = 'C_Transaksi/checkout/$1';
-$route[ 'Checkout-Print/(:any)' ]     = 'C_Transaksi/print_checkout/$1';
-$route[ 'Checkout-Print-PDF/(:any)' ] = 'C_Transaksi/print_pdf_invoice/$1';
-$route[ 'Checkout-Process' ]          = 'C_Transaksi/checkout_process';
+$route[ 'Manage-Transaksi' ]           = 'C_Transaksi';
+$route[ 'Search-Sampah' ]              = 'C_Sampah/search_pilih_sampah';
+$route[ 'Search-Harga-Sampah/(:any)' ] = 'C_Sampah/search_harga_sampah/$1';
+$route[ 'Search-Nasabah' ]             = 'C_Transaksi/search_pilih_nasabah';
+$route[ 'Add-Transaksi' ]              = 'C_Transaksi/add_transaksi';
+$route[ 'Checkout-Transaksi/(:any)' ]  = 'C_Transaksi/checkout/$1';
+$route[ 'Checkout-Print/(:any)' ]      = 'C_Transaksi/print_checkout/$1';
+$route[ 'Checkout-Print-PDF/(:any)' ]  = 'C_Transaksi/print_pdf_invoice/$1';
+$route[ 'Checkout-Process' ]           = 'C_Transaksi/checkout_process';
 
 // Petugas - Management Hasil Karya Sampah
 $route[ 'Hasil-Karya' ]                 = 'C_Hasil_Karya';

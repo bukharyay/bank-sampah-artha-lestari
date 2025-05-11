@@ -51,6 +51,33 @@ class M_Sampah extends CI_Model
 
 		return $results;
 		}
+	public function search_harga_sampah_by_id ( $id )
+		{
+		$field = "h.id_harga,
+		 h.id_sampah,
+		 h.harga_per_kg,
+		 h.periode,
+		 h.created_at AS harga_created_at,
+		 s.id_sampah,
+		 s.id_jenis_sampah,
+		 s.nama_sampah,
+		 s.created_at AS sampah_created_at,
+		 s.updated_at AS sampah_updated_at,
+		 j.id_jenis_sampah AS id_jenis,
+		 j.jenis_sampah AS jenis_sampah";
+
+		$query = $this->db->select ( $field )
+			->from ( "{$this->tables[ 'harga' ]} as h" )
+			->join ( "{$this->tables[ 'sampah' ]} as s", "h.id_sampah = s.id_sampah" )
+			->join ( "{$this->tables[ 'jenis' ]} as j", "s.id_jenis_sampah = j.id_jenis_sampah" )
+			->where ( "s.id_sampah", $id )
+			->order_by ( 'h.periode', 'DESC' )
+			->order_by ( 'h.created_at', 'DESC' )
+			->limit ( 1 )
+			->get ()->row_object ();
+
+		return $query;
+		}
 	public function search_harga_sampah ( $search_term = '' )
 		{
 		$field = "h.id_harga,
