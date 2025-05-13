@@ -8,7 +8,7 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class C_Transaksi extends MY_Controller
 	{
 	protected $allowed_roles = [ 'admin', 'petugas' ];
-	public $user_session = [];
+	public    $user_session  = [];
 
 	public function __construct ()
 		{
@@ -172,18 +172,21 @@ class C_Transaksi extends MY_Controller
 
 	private function _get_checkout_data ( $kode_transaksi )
 		{
-		$checkout = $this->M_Transaksi->checkout ( $kode_transaksi );
-		$harga    = $this->M_Sampah->get_last_harga ( $checkout->id_sampah, 'transaksi' );
-		$total    = ( $checkout->berat / 1000 ) * $harga->harga_per_kg;
+		$checkout     = $this->M_Transaksi->checkout ( $kode_transaksi );
+		$harga        = $this->M_Sampah->get_last_harga ( $checkout->id_sampah, 'transaksi' );
+		$harga_per_kg = is_numeric ( $harga->harga_per_kg ) ? $harga->harga_per_kg : (float) str_replace ( [ '.', ',' ], [ '', '.' ], $harga->harga_per_kg );
+		$berat_kg     = $checkout->berat / 1000;
+		$total        = $berat_kg * $harga_per_kg;
 
 		return [ 
 			'kode_transaksi'    => $kode_transaksi,
 			'tanggal_transaksi' => $checkout->tanggal_transaksi,
 			'nama_sampah'       => $checkout->nama_sampah,
-			'berat'             => $checkout->berat,
-			'harga_per_kg'      => $harga->harga_per_kg,
+			'berat'             => $berat_kg,
+			'harga_per_kg'      => number_format ( $harga_per_kg, 2, ',', '.' ), // Format harga
 			'status'            => $checkout->status,
-			'total'             => number_format ( $total, 2, ',', '.' ),
+			'total'             => number_format ( $total, 2, ',', '.' ), // Format total
+			'title'             => 'Checkout-' . $kode_transaksi // Tambahkan title jika diperlukan
 		];
 		}
 
