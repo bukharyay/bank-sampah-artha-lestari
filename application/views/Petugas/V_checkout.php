@@ -55,7 +55,7 @@
                       <td class="text-left">1</td>
                       <td class="text-left"><?= $nama_sampah ?></td>
                       <td>
-                        <?= number_format ( $berat / 1000, 2, ',', '.' ) . '/kg' ?>
+                        <?= number_format ( $berat, 2, ',', '.' ) . '/kg' ?>
                       </td>
                       <td>Rp. <?= $harga_per_kg ?></td>
                       <td>Rp. <?= $total ?></td>
