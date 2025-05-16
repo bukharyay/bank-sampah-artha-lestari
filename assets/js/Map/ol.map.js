@@ -15,7 +15,8 @@ let VectorLayer = ol.layer.Vector
 const GEOCODE_MIN_DELAY = 5000; // 5 seconds between geocoding requests
 const MAX_MARKERS = 10; // Maximum markers to show
 const DEFAULT_ZOOM = 18;
-const DEFAULT_CENTER = [110.4218, -7.07300]; // Initial map center [lon, lat]
+// const DEFAULT_CENTER = [110.4218, -7.07300]; // Initial map center [lon, lat]-7.073223409384761, 110.4215172436207
+const DEFAULT_CENTER = [110.4215172436207, -7.073223409384761]; // Initial map center [lon, lat]-7.073223409384761, 110.4215172436207
 
 let nilaiZoom = DEFAULT_ZOOM;
 
