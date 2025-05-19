@@ -3,7 +3,7 @@
 
 <section class="py-0" id="tentang">
   <div class="bg-holder"
-       style="background-image:url(<?= base_url () ?>assets/landing/img/illustrations/dot.png);background-position:left;background-size:auto;margin-top:-105px;">
+    style="background-image:url(<?= base_url () ?>assets/landing/img/illustrations/dot.png);background-position:left;background-size:auto;margin-top:-105px;">
   </div>
 
   <div class="container position-relative py-5">
@@ -74,7 +74,7 @@
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body p-4">
             <img src="<?= base_url () ?>assets/landing/img/tentang.jpg" style="height: 300px ;"
-                 alt="Proses Bank Sampah Artha Lestari" class="img-fluid rounded mb-4">
+              alt="Proses Bank Sampah Artha Lestari" class="img-fluid rounded mb-4">
             <h4 class="fw-bold mb-3">Sistem Pengelolaan Unik Kami</h4>
             <p>Berbeda dengan bank sampah biasa, kami memiliki karakteristik khusus:</p>
             <ul class="list-unstyled small">
@@ -101,13 +101,13 @@
     <div class="row mt-6">
       <div class="col-12 text-center mb-5">
         <h2 class="fw-bold">Perjalanan Gerakan Kami</h2>
-        <p class="lead">Sejak 2015, konsisten membersihkan RW 02 melalui pengelolaan sampah terpadu</p>
+        <p class="lead">Sejak 2019, konsisten membersihkan RW 02 melalui pengelolaan sampah terpadu</p>
       </div>
 
       <div class="col-12">
         <div class="timeline">
           <div class="timeline-item">
-            <div class="timeline-date">2015</div>
+            <div class="timeline-date">2019</div>
             <div class="timeline-content card  shadow">
               <div class="card-body">
                 <h5 class="fw-bold">Awal Gerakan</h5>
@@ -118,7 +118,7 @@
           </div>
 
           <div class="timeline-item">
-            <div class="timeline-date">2017</div>
+            <div class="timeline-date">2020</div>
             <div class="timeline-content card  shadow">
               <div class="card-body">
                 <h5 class="fw-bold">Kemitraan Strategis</h5>
@@ -129,7 +129,7 @@
           </div>
 
           <div class="timeline-item">
-            <div class="timeline-date">2020</div>
+            <div class="timeline-date">2021</div>
             <div class="timeline-content card  shadow">
               <div class="card-body">
                 <h5 class="fw-bold">Pengakuan Resmi</h5>

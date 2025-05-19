@@ -68,7 +68,7 @@
 							<a href="mailto:ketua@arthalestari.id" class="btn btn-sm btn-outline-primary rounded-pill mb-2">
 								<i class="icon icon-sm mdi mdi-email-outline "></i> Email
 							</a>
-							<a href="tel:+628123456789" class="btn btn-sm btn-outline-primary rounded-pill mb-2 ms-2">
+							<a href="tel:+6282327575717" class="btn btn-sm btn-outline-primary rounded-pill mb-2 ms-2">
 								<i class="icon icon-sm mdi mdi-phone "></i> Telepon
 							</a>
 						</div>
@@ -100,7 +100,7 @@
 							<a href="mailto:wakil@arthalestari.id" class="btn btn-sm btn-outline-primary rounded-pill mb-2">
 								<i class="icon icon-sm mdi mdi-email-outline "></i> Email
 							</a>
-							<a href="tel:+628123456788" class="btn btn-sm btn-outline-primary rounded-pill mb-2 ms-2">
+							<a href="tel:+6282327575717" class="btn btn-sm btn-outline-primary rounded-pill mb-2 ms-2">
 								<i class="icon icon-sm mdi mdi-phone "></i> Telepon
 							</a>
 						</div>
@@ -132,7 +132,7 @@
 							<a href="mailto:bendahara@arthalestari.id" class="btn btn-sm btn-outline-primary rounded-pill mb-2">
 								<i class="icon icon-sm mdi mdi-email-outline "></i> Email
 							</a>
-							<a href="tel:+628123456787" class="btn btn-sm btn-outline-primary rounded-pill mb-2 ms-2">
+							<a href="tel:+6282327575717" class="btn btn-sm btn-outline-primary rounded-pill mb-2 ms-2">
 								<i class="icon icon-sm mdi mdi-phone "></i> Telepon
 							</a>
 						</div>
@@ -216,7 +216,7 @@
 								<i class="icon icon-md mdi mdi-file-document-edit-outline"></i>
 							</span>
 						</div>
-						<h5 class="fw-bold mb-1">Sri Wahyuni</h5>
+						<h5 class="fw-bold mb-1">Dhewinta</h5>
 						<p class="fw-bold text-primary mb-2">Sekretaris</p>
 						<ul class="list-unstyled small text-start mb-3">
 							<li class="mb-1"><i class="icon icon-sm mdi mdi-check-circle-outline text-success me-2"></i>Administrasi &
@@ -245,15 +245,15 @@
 
 			<?php
 			$pkk_team = [
-				['name' => 'Retnowati', 'rt' => '01', 'phone' => '08123456701'],
-				['name' => 'Saryati', 'rt' => '02', 'phone' => '08123456702'],
-				['name' => 'Wuryanti', 'rt' => '03', 'phone' => '08123456703'],
-				['name' => 'Amanah Wiranti', 'rt' => '04', 'phone' => '08123456704'],
-				['name' => 'Murheni', 'rt' => '05', 'phone' => '08123456705'],
-				['name' => 'Lusi Puspitasari', 'rt' => '06', 'phone' => '08123456706'],
-				['name' => 'Nuryani', 'rt' => '07', 'phone' => '08123456707'],
-				['name' => 'Wahyuningsih', 'rt' => '08', 'phone' => '08123456708'],
-				['name' => 'Sri Harjanti', 'rt' => '09', 'phone' => '08123456709'],
+				['name' => 'Retnowati', 'rt' => '01', 'phone' => '082327575717'],
+				['name' => 'Saryati', 'rt' => '02', 'phone' => '082327575717'],
+				['name' => 'Wuryanti', 'rt' => '03', 'phone' => '082327575717'],
+				['name' => 'Amanah Wiranti', 'rt' => '04', 'phone' => '082327575717'],
+				['name' => 'Murheni', 'rt' => '05', 'phone' => '082327575717'],
+				['name' => 'Lusi Puspitasari', 'rt' => '06', 'phone' => '082327575717'],
+				['name' => 'Nuryani', 'rt' => '07', 'phone' => '082327575717'],
+				['name' => 'Wahyuningsih', 'rt' => '08', 'phone' => '082327575717'],
+				['name' => 'Sri Harjanti', 'rt' => '09', 'phone' => '082327575717'],
 			];
 
 			foreach ($pkk_team as $member) : ?>
